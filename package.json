@@ -9,7 +9,9 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "test": "vitest run",
-    "content": "node --experimental-strip-types scripts/build-content.ts"
+    "content": "node --experimental-strip-types scripts/build-content.ts",
+    "build:root": "BASE=/ npm run build",
+    "deploy:cloudflare": "npm run build:root && npx wrangler@4 pages deploy dist --project-name pluggappen --branch main"
   },
   "dependencies": {
     "dexie": "^4.4.6",

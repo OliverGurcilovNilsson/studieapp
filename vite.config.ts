@@ -3,7 +3,8 @@ import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
 // GitHub Pages serves the site from /<repo>/ (so does `vite preview`). Dev and tests run from the root.
-const PAGES_BASE = '/studieapp/'
+// Hosts that serve from the domain root (Cloudflare Pages) build with BASE=/ (`npm run build:root`).
+const PAGES_BASE = process.env.BASE ?? '/studieapp/'
 
 export default defineConfig(({ command, isPreview }) => ({
   base: command === 'build' || isPreview ? PAGES_BASE : '/',

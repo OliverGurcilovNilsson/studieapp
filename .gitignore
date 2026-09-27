@@ -32,3 +32,6 @@ dist-ssr
 *backup*.json
 .env
 .env.*
+
+# Cloudflare deploy cache
+.wrangler
