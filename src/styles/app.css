@@ -311,3 +311,117 @@ h3 {
 .small {
   font-size: 13px;
 }
+
+/* ---------- Settings ---------- */
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 720px;
+}
+
+.settings .page-head {
+  margin-bottom: 6px;
+}
+
+.settings-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 20px;
+  scroll-margin-top: 20px;
+}
+
+.settings-card h2 {
+  font-size: 20px;
+}
+
+.settings-card p {
+  margin: 0;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  font-weight: 600;
+}
+
+.field input {
+  min-height: 46px;
+  padding: 0 12px;
+  border: 2px solid var(--line);
+  border-radius: var(--radius-s);
+  background: var(--bg);
+}
+
+.field input[type='number'] {
+  width: 100px;
+}
+
+.field input:focus {
+  border-color: var(--ink);
+  outline: none;
+}
+
+.row-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+label.btn {
+  cursor: pointer;
+}
+
+label.btn:focus-within {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.is-busy {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.ok {
+  color: #155c3b;
+  font-weight: 600;
+}
+
+.segmented-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 0;
+}
+
+.notice strong {
+  font-family: var(--font-display);
+  font-size: 17px;
+}
+
+.notice p {
+  margin: 4px 0 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .ok {
+    color: #8fe0b5;
+  }
+}
+
+:root[data-theme='dark'] .ok {
+  color: #8fe0b5;
+}
+
+:root[data-theme='dark'] .error {
+  color: #ffb4ab;
+}
+
+.notice-link {
+  color: var(--ink);
+  text-decoration: none;
+  margin-bottom: 20px;
+}

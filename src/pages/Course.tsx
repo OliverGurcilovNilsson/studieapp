@@ -1,4 +1,5 @@
 import { Link, useParams } from 'react-router-dom'
+import { SETTINGS } from '../data/settings'
 import { getSetting, loadCourseData, predictedRecall, topicStats } from '../data/queries'
 import { buildQueue } from '../lib/session'
 import { topicColor, topicName } from '../lib/topics'
@@ -11,7 +12,7 @@ export function Course() {
     const cd = await loadCourseData(courseId)
     if (!cd) return undefined
     const now = Date.now()
-    const examDate = await getSetting<number | undefined>(`examDate:${courseId}`, undefined)
+    const examDate = await getSetting<number | undefined>(SETTINGS.examDate(courseId), undefined)
     const stats = topicStats(cd, now)
     const total = stats.reduce((a, t) => a + t.total, 0)
     const mastered = stats.reduce((a, t) => a + t.mastered, 0)

@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom'
-import { loadCourseData, loadCourses, topicStats } from '../data/queries'
+import { backupReminderDue } from '../data/backup'
+import { getSetting, loadCourseData, loadCourses, topicStats } from '../data/queries'
+import { SETTINGS } from '../data/settings'
+import { db } from '../db/db'
 import { topicColor } from '../lib/topics'
-import { IconPlus, Mascot } from '../ui/icons'
+import { IconAlert, IconPlus, Mascot } from '../ui/icons'
 import { SampleButton } from '../dev/SampleButton'
 import { useAsync } from '../ui/useAsync'
 
@@ -9,7 +12,9 @@ export function Library() {
   const { data, loading, reload } = useAsync(async () => {
     const courses = await loadCourses()
     const now = Date.now()
-    return Promise.all(
+    const lastBackupAt = await getSetting<number | undefined>(SETTINGS.lastBackupAt, undefined)
+    const backupDue = backupReminderDue(lastBackupAt, (await db.reviewStates.count()) > 0, now)
+    const decks = await Promise.all(
       courses.map(async (course) => {
         const cd = (await loadCourseData(course.id))!
         const stats = topicStats(cd, now)
@@ -19,11 +24,12 @@ export function Library() {
         return { course, total, mastered, due }
       }),
     )
+    return { decks, backupDue }
   }, [])
 
   if (loading) return null
 
-  if (!data?.length) {
+  if (!data?.decks.length) {
     return (
       <section className="empty">
         <Mascot size={96} />
@@ -47,8 +53,17 @@ export function Library() {
           Importera
         </Link>
       </div>
+      {data.backupDue && (
+        <Link to="/installningar#backup" className="notice notice-link">
+          <IconAlert />
+          <div>
+            <strong>Dags för säkerhetskopia</strong>
+            <p className="small">Allt sparas bara på den här enheten. Exportera en kopia i Inställningar.</p>
+          </div>
+        </Link>
+      )}
       <div className="deck-grid">
-        {data.map(({ course, total, mastered, due }, i) => (
+        {data.decks.map(({ course, total, mastered, due }, i) => (
           <Link
             key={course.id}
             to={`/kurs/${course.id}`}

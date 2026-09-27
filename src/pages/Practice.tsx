@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Link, Navigate, useParams, useSearchParams } from 'react-router-dom'
 import type { PracticeArticle, ReviewTemplate } from '../content/schema'
+import { SETTINGS } from '../data/settings'
 import { getSetting, loadCourseData, loadCourses, type CourseData } from '../data/queries'
 import { saveReview } from '../data/review'
 import { db, type ReviewState } from '../db/db'
@@ -49,7 +50,7 @@ export function Practice() {
     const cd = await loadCourseData(courseId)
     if (!cd) return undefined
     const [examDate, articles, templates] = await Promise.all([
-      getSetting<number | undefined>(`examDate:${courseId}`, undefined),
+      getSetting<number | undefined>(SETTINGS.examDate(courseId), undefined),
       db.articles.where({ courseId }).toArray(),
       db.templates.where({ courseId }).toArray(),
     ])

@@ -79,3 +79,13 @@ export async function importCourse(db: StudyDb, bundle: ContentBundle): Promise<
     }
   })
 }
+
+/** Swedish summary shown after an import. */
+export function describeImport(name: string, r: ImportResult): string {
+  const parts = [`${name} importerad: ${r.questions} frågor, varav ${r.added} nya.`]
+  if (r.orphanedProgress)
+    parts.push(
+      `${r.orphanedProgress} ${r.orphanedProgress === 1 ? 'fråga' : 'frågor'} du har övat på finns inte längre i kursfilen. Framstegen sparas ändå.`,
+    )
+  return parts.join(' ')
+}

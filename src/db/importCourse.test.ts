@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import { BUNDLE_FORMAT, BUNDLE_VERSION, type ContentBundle, type Question } from '../content/schema'
 import { newCard } from '../lib/scheduler'
 import { StudyDb } from './db'
-import { ImportError, importCourse, parseBundle } from './importCourse'
+import { describeImport, ImportError, importCourse, parseBundle } from './importCourse'
 
 // Made-up sample content only: real course material never enters the repo.
 const question = (id: string, prompt = 'Vad är 1 + 1?'): Question => ({
@@ -90,5 +90,16 @@ describe('parseBundle', () => {
     expect(() => parseBundle('nope')).toThrow(ImportError)
     expect(() => parseBundle('{"format":"other"}')).toThrow('inte en kursfil')
     expect(() => parseBundle(JSON.stringify({ ...bundle([]), version: 99 }))).toThrow('version 99')
+  })
+})
+
+describe('describeImport', () => {
+  it('mentions orphaned progress only when there is some', () => {
+    expect(describeImport('Testkurs', { courseId: 'c', questions: 3, added: 1, orphanedProgress: 0 })).toBe(
+      'Testkurs importerad: 3 frågor, varav 1 nya.',
+    )
+    expect(describeImport('Testkurs', { courseId: 'c', questions: 3, added: 0, orphanedProgress: 1 })).toContain(
+      '1 fråga du har övat på finns inte längre',
+    )
   })
 })
