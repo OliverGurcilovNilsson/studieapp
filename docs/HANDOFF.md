@@ -54,7 +54,9 @@ Done and tested (31 tests):
 9. [x] **Felbank**: questions with lapses ≥ 2 or most recently rated "Igen".
    - Done: `/kurs/:courseId/felbank` (`src/pages/Mistakes.tsx`), logic in `src/lib/mistakes.ts` (tested). "Öva felbanken" and each row open practice with `?fragor=`. The Course tiles now show live counts for Felbank and Täckningskarta (topics with a gap or unstarted questions).
    - Decision: "lapses" are FSRS `card.lapses` (forgetting after the card had graduated); the row also shows how often she rated it "Igen" in total, from `reviewLog`.
-10. [ ] **PWA**: `vite-plugin-pwa` (autoUpdate + "Ny version – ladda om" banner), manifest (the mascot icon, Swedish name), offline caching including Google Fonts, `base` set for GitHub Pages.
+10. [x] **PWA**: `vite-plugin-pwa` (autoUpdate + "Ny version – ladda om" banner), manifest (the mascot icon, Swedish name), offline caching including Google Fonts, `base` set for GitHub Pages.
+    - Done: `vite.config.ts` (VitePWA, `base: '/studieapp/'` for build and preview), `src/ui/UpdateBanner.tsx`, icons in `public/` (rendered from the mascot SVG: 192, 512, maskable 512, apple-touch 180).
+    - Decisions: `registerType: 'autoUpdate'` with `onNeedReload`, so a new worker takes over at once but the page shows "Ny version av appen finns. Ladda om" instead of reloading mid-question. It also listens for `controllerchange` (a worker can activate before workbox-window listens) and checks for updates hourly, because with hash routing the app never navigates. Google Fonts CSS is StaleWhileRevalidate and the font files CacheFirst for a year. Verified with `vite preview`: works offline after the first visit, and the banner appears after a new build is picked up. If the repo is renamed, change `PAGES_BASE` in `vite.config.ts`.
 11. [ ] **Deploy**: a GitHub Actions workflow that builds and deploys to Pages on push to main (runs `npm test` first).
 12. [ ] **Dexie migration test harness**, ready for the first v2 schema change.
 

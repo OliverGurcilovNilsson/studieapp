@@ -987,3 +987,29 @@ h1 {
   flex-wrap: wrap;
   gap: 6px;
 }
+
+/* ---------- PWA update banner ---------- */
+
+.update-banner {
+  position: fixed;
+  z-index: 50;
+  left: 50%;
+  translate: -50% 0;
+  top: calc(12px + env(safe-area-inset-top));
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: max-content;
+  max-width: calc(100% - 2 * var(--gutter));
+  padding: 8px 8px 8px 18px;
+  border-radius: var(--pill);
+  background: var(--ink);
+  color: var(--bg);
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 10px 22px rgba(17, 17, 20, 0.25);
+}
+
+.update-banner .btn-small {
+  margin-top: 0;
+}

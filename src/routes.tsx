@@ -7,11 +7,13 @@ import { Mistakes } from './pages/Mistakes'
 import { Practice, PracticeIndex } from './pages/Practice'
 import { Settings } from './pages/Settings'
 import { Shell } from './ui/Shell'
+import { UpdateBanner } from './ui/UpdateBanner'
 
 // HashRouter: GitHub Pages serves one index.html and cannot rewrite deep links.
 export function AppRoutes() {
   return (
     <HashRouter>
+      <UpdateBanner />
       <Routes>
         <Route element={<Shell />}>
           <Route index element={<Library />} />
