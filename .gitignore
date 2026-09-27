@@ -28,7 +28,7 @@ dist-ssr
 *.pages
 *.pptx
 *.docx
-content/
+/content/
 *backup*.json
 .env
 .env.*
