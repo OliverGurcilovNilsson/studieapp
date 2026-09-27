@@ -1,5 +1,6 @@
 import type { Course } from '../content/schema'
 import { db, type ReviewState, type StoredQuestion } from '../db/db'
+import { isMastered } from '../lib/coverage'
 import { retrievability } from '../lib/scheduler'
 import { isPractisable } from '../lib/session'
 import { startedToday } from '../lib/stats'
@@ -29,12 +30,10 @@ export interface TopicStats {
   topic: string
   total: number
   seen: number
-  /** Stability ≥ 21 days: answered correctly across several separate days (the plan's definition). */
+  /** See isMastered: stable for three weeks and checked against a trusted key. */
   mastered: number
   due: number
 }
-
-export const MASTERED_STABILITY_DAYS = 21
 
 export function topicStats({ questions, states }: CourseData, now: number): TopicStats[] {
   const byTopic = new Map<string, TopicStats>()
@@ -45,7 +44,7 @@ export function topicStats({ questions, states }: CourseData, now: number): Topi
     const s = states.get(q.id)
     if (s) {
       t.seen++
-      if (s.card.stability >= MASTERED_STABILITY_DAYS) t.mastered++
+      if (isMastered(q, s)) t.mastered++
       if (s.due <= now) t.due++
     }
     byTopic.set(q.topic, t)

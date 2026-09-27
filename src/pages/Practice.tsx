@@ -4,6 +4,7 @@ import type { PracticeArticle, ReviewTemplate } from '../content/schema'
 import { loadCourseData, loadCourses, loadPlanContext, type CourseData, type PlanContext } from '../data/queries'
 import { saveReview } from '../data/review'
 import { db, type ReviewState } from '../db/db'
+import { gapQueue } from '../lib/coverage'
 import { dailyQueue } from '../lib/examMode'
 import { buildAheadQueue, pickQuestions, summarize, type SessionResult } from '../lib/practice'
 import { buildQueue, type QueueItem } from '../lib/session'
@@ -48,6 +49,7 @@ export function Practice() {
   const topic = params.get('amne') ?? undefined
   const examId = params.get('tenta') ?? undefined
   const ids = params.get('fragor') ?? undefined
+  const gaps = params.has('luckor')
   const { data, loading } = useAsync(async (): Promise<Loaded | undefined> => {
     const cd = await loadCourseData(courseId)
     if (!cd) return undefined
@@ -61,15 +63,38 @@ export function Practice() {
 
   if (loading) return null
   if (!data) return <Navigate to="/" replace />
-  return <Session key={`${topic}|${examId}|${ids}`} data={data} topic={topic} examId={examId} ids={ids?.split(',')} />
+  return (
+    <Session
+      key={`${topic}|${examId}|${ids}|${gaps}`}
+      data={data}
+      topic={topic}
+      examId={examId}
+      ids={ids?.split(',')}
+      gaps={gaps}
+    />
+  )
 }
 
-function Session({ data, topic, examId, ids }: { data: Loaded; topic?: string; examId?: string; ids?: string[] }) {
+function Session({
+  data,
+  topic,
+  examId,
+  ids,
+  gaps,
+}: {
+  data: Loaded
+  topic?: string
+  examId?: string
+  ids?: string[]
+  gaps?: boolean
+}) {
   const courseId = data.cd.course.id
   const [states, setStates] = useState(data.cd.states)
   const [queue, setQueue] = useState<QueueItem[]>(() =>
     ids
       ? pickQuestions(data.cd.questions, data.cd.states, ids)
+      : gaps
+        ? gapQueue(data.cd.questions, data.cd.states)
       : examId
       ? buildQueue(data.cd.questions, data.cd.states, Date.now(), { examId, limit: 999, newLimit: 999 })
       : dailyQueue({ questions: data.cd.questions, states: data.cd.states, now: Date.now(), topic, ...data.ctx }),

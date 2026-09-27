@@ -1,5 +1,6 @@
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { Course } from './pages/Course'
+import { Coverage } from './pages/Coverage'
 import { ExamSim } from './pages/ExamSim'
 import { Library } from './pages/Library'
 import { Practice, PracticeIndex } from './pages/Practice'
@@ -14,6 +15,7 @@ export function AppRoutes() {
         <Route element={<Shell />}>
           <Route index element={<Library />} />
           <Route path="kurs/:courseId" element={<Course />} />
+          <Route path="kurs/:courseId/tackning" element={<Coverage />} />
           <Route path="ova" element={<PracticeIndex />} />
           <Route path="installningar" element={<Settings />} />
           <Route path="*" element={<Navigate to="/" replace />} />

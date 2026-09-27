@@ -827,3 +827,112 @@ h1 {
   font-family: var(--font-display);
   font-size: 20px;
 }
+
+/* ---------- Coverage map (mockup 7) ---------- */
+
+.coverage {
+  max-width: 720px;
+}
+
+.page-title {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.coverage-top {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.coverage-top .big-number.huge {
+  font-size: clamp(72px, 22vw, 96px);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+}
+
+.coverage-top > div:last-child {
+  font-size: 15px;
+  line-height: 1.25;
+  padding-bottom: 6px;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.legend span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend i {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+.seg-mastered {
+  background: var(--ink);
+}
+
+.seg-seen {
+  background: var(--peri);
+}
+
+.seg-new {
+  background: var(--line);
+}
+
+.coverage-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.coverage-label {
+  font-size: 14px;
+}
+
+.coverage-label strong {
+  font-weight: 600;
+}
+
+.stacked {
+  display: flex;
+  height: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 6px 0 2px;
+}
+
+.coverage-gap {
+  background: var(--orange-soft);
+  border-radius: 16px;
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
+.coverage-gap .small {
+  font-weight: 700;
+}
+
+.coverage-gap > .small {
+  margin-top: 4px;
+  font-weight: 400;
+}
+
+.coverage-cta {
+  margin-top: 24px;
+}
+
+.coverage-label .muted {
+  white-space: nowrap;
+}
