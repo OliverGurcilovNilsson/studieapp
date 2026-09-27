@@ -1,5 +1,13 @@
 # Handoff: continue building Studieapp
 
+## Status (2026-09-27, end of the second cloud session)
+- **All 12 tasks below are done** and committed one by one on branch `claude/vibrant-pascal-xrgxfp`. 90 tests in 15 files pass; `npm run build` and `npm run lint` are clean. No new dependencies were added.
+- The app is complete for Phases 1–2b: Library → Course overview → Practice (all question types, keyboard shortcuts, ratings), Settings (import, exam date, minutes/day, theme, backup), Tentaläge (exam-aware plan + "Beräknad poäng X/50 → G"), Tentasimulering, Täckningskarta, Felbank, PWA (offline + update banner), a Pages deploy workflow, and the migration harness.
+- Checked in a real browser (headless Chromium, 390 px and 1280 px, light and dark) with the made-up sample course: every question type, the full exam simulation, coverage, Felbank, and offline mode plus the update banner under `vite preview`. Fonts fall back in the sandbox (Google Fonts is blocked there), so type rendering was not checked against the mockups.
+- **Owner actions:** (1) merge this branch into `main`, since the workflow deploys only from `main`; (2) set Settings → Pages → Source to "GitHub Actions" once; (3) on the Mac, import the real `3fs075.json` and play through one real exam, as `docs/PLAN.md` → Verification describes.
+- Decisions made without asking are listed under each task below. The ones most worth a look: restoring a backup *merges* progress (never replaces it); auto-scored answers are rated automatically (1–4 still override); wrong rounding scores 0 in practice and in the simulation; G/VG limits scale for past papers that do not total 50 p; the forecast and "behärskad" count only questions with a trustworthy key.
+- Not done / next ideas: a restore UI for the pre-upgrade snapshots; using her own `durationMs` instead of fixed seconds per type in Tentaläge; the article-review view with the article PDF side by side (today it's a link that opens the PDF); "Lägg till bekräftat facit" from mockup 6; Phase 3 (AI) and Phase 4 stats.
+
 Read first: `CLAUDE.md` (hard rules), `docs/PLAN.md` (the full spec) and `docs/mockups/*.dc.html` (the approved visual design; open them as plain HTML, the markup is inline-styled).
 
 ## Hard constraints for cloud sessions
@@ -8,7 +16,7 @@ Read first: `CLAUDE.md` (hard rules), `docs/PLAN.md` (the full spec) and `docs/m
 - UI copy is Swedish, code is English. Keep dependencies few; the approved set is already in package.json.
 - Run `npm test` and `npm run build` before every commit. Commit in small steps with clear messages.
 
-## State when handed off (2026-09-27)
+## State at the start of the second session (2026-09-27)
 Done and tested (31 tests):
 - `src/db/db.ts`: Dexie schema v1. Content is keyed `[courseId+id]`; progress (`reviewStates`, `reviewLog`) is kept across re-imports.
 - `src/db/importCourse.ts`: parse + import, with tests.
@@ -20,7 +28,7 @@ Done and tested (31 tests):
 - Practice components written: `src/practice/{RichText,AnswerPanel,useAssetUrl}`.
 - `scripts/build-content.ts`: merges parts, with source priority and validation. Runs locally only.
 
-`src/main.tsx` / `App.tsx` are still the Vite template. **The app does not show the new pages yet.**
+(At that point `src/main.tsx` / `App.tsx` were still the Vite template; task 2 replaced them.)
 
 ## Task list (in order; tick them off in this file as you go)
 1. [x] **Sample course** `dev/sample-course.json`: made-up content in the bundle format covering every question type (mcq, mcq_multi with negativeMarking, calculation with decimals, free_text with official, student (full and partial) and own_notes answers, one with no trusted answer, flashcard, article_review), 2 fake exams, 1 fake PNG asset. Add a "Ladda exempelkurs" button in dev builds only.
