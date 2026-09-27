@@ -1,0 +1,65 @@
+/* Design tokens from the approved mockups. Accent fills keep dark text in both themes. */
+:root {
+  --peri: #a9adf0;
+  --peri-soft: #d9dbfa;
+  --lavender: #b7baf6;
+  --yellow: #f2c84b;
+  --pink: #f4b9b3;
+  --pink-soft: #fce8e5;
+  --mint: #a6e3c8;
+  --mint-soft: #e4f6ec;
+  --orange: #f59e3b;
+  --orange-soft: #ffe3bf;
+  --blue: #2436d9;
+  --on-accent: #111114;
+  --on-accent-muted: #2a2b55;
+
+  --bg: #ffffff;
+  --surface: #f3f3f7;
+  --surface-2: #ffffff;
+  --ink: #111114;
+  --muted: #55555f;
+  --line: #eaeaf0;
+  --focus: #2436d9;
+
+  --font-display: 'Bricolage Grotesque', 'Figtree', system-ui, sans-serif;
+  --font-body: 'Figtree', system-ui, sans-serif;
+
+  --radius-s: 14px;
+  --radius-m: 20px;
+  --radius-l: 26px;
+  --pill: 999px;
+  --gutter: 16px;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #121216;
+    --surface: #1e1e25;
+    --surface-2: #26262f;
+    --ink: #f2f2f5;
+    --muted: #a4a4b0;
+    --line: #2d2d37;
+    --focus: #a9adf0;
+    --pink-soft: #3a2624;
+    --mint-soft: #1f3329;
+    --orange-soft: #3d2c14;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] {
+  --bg: #121216;
+  --surface: #1e1e25;
+  --surface-2: #26262f;
+  --ink: #f2f2f5;
+  --muted: #a4a4b0;
+  --line: #2d2d37;
+  --focus: #a9adf0;
+  --pink-soft: #3a2624;
+  --mint-soft: #1f3329;
+  --orange-soft: #3d2c14;
+  color-scheme: dark;
+}

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<title>Täckningskarta</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&amp;family=Figtree:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;font-family:'Figtree',system-ui,sans-serif;color:#111114;background:#ffffff}
+button{font-family:inherit;color:inherit;cursor:pointer}
+</style>
+</helmet>
+<div style="width: 390px; height: 900px; box-sizing: border-box; background: #ffffff; display: flex; flex-direction: column; overflow: hidden; font-family: 'Figtree', system-ui, sans-serif; color: #111114; padding: 0 22px 30px">
+  <header style="display: flex; align-items: center; justify-content: space-between; padding-top: 56px">
+    <a href="Oversikt.dc.html" aria-label="Tillbaka" style="width: 44px; height: 44px; border-radius: 50%; background: #F3F3F7; color: #111114; display: flex; align-items: center; justify-content: center">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
+    </a>
+    <div style="font-size: 17px; font-weight: 600">Täckningskarta</div>
+    <div style="width: 44px"></div>
+  </header>
+
+  <div style="display: flex; align-items: flex-end; gap: 12px; margin-top: 14px">
+    <div style="font-family: 'Bricolage Grotesque', sans-serif; font-weight: 800; font-size: 84px; line-height: 0.9; letter-spacing: -0.04em">62%</div>
+    <div style="font-size: 15px; line-height: 1.25; padding-bottom: 6px">av kursen<br>behärskad</div>
+  </div>
+
+  <div style="display: flex; gap: 14px; margin-top: 14px; font-size: 12px; color: #44444C">
+    <span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 3px; background: #111114"></span>Behärskad</span>
+    <span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 3px; background: #A9ADF0"></span>Sedd</span>
+    <span style="display: flex; align-items: center; gap: 6px"><span style="width: 12px; height: 12px; border-radius: 3px; background: #E6E6EE"></span>Ej påbörjad</span>
+  </div>
+
+  <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 18px">
+    <div>
+      <div style="display: flex; justify-content: space-between; font-size: 14px"><span style="font-weight: 600">Studiedesigner</span><span style="color: #55555F">på 8 av 9 tentor</span></div>
+      <div style="display: flex; height: 10px; border-radius: 5px; overflow: hidden; margin-top: 6px"><div style="width: 70%; background: #111114"></div><div style="width: 20%; background: #A9ADF0"></div><div style="width: 10%; background: #E6E6EE"></div></div>
+    </div>
+    <div>
+      <div style="display: flex; justify-content: space-between; font-size: 14px"><span style="font-weight: 600">Förekomstmått</span><span style="color: #55555F">på 9 av 9 tentor</span></div>
+      <div style="display: flex; height: 10px; border-radius: 5px; overflow: hidden; margin-top: 6px"><div style="width: 80%; background: #111114"></div><div style="width: 15%; background: #A9ADF0"></div><div style="width: 5%; background: #E6E6EE"></div></div>
+    </div>
+    <div>
+      <div style="display: flex; justify-content: space-between; font-size: 14px"><span style="font-weight: 600">Effektmått</span><span style="color: #55555F">på 9 av 9 tentor</span></div>
+      <div style="display: flex; height: 10px; border-radius: 5px; overflow: hidden; margin-top: 6px"><div style="width: 60%; background: #111114"></div><div style="width: 30%; background: #A9ADF0"></div><div style="width: 10%; background: #E6E6EE"></div></div>
+    </div>
+    <div>
+      <div style="display: flex; justify-content: space-between; font-size: 14px"><span style="font-weight: 600">Bias &amp; confounding</span><span style="color: #55555F">på 7 av 9 tentor</span></div>
+      <div style="display: flex; height: 10px; border-radius: 5px; overflow: hidden; margin-top: 6px"><div style="width: 35%; background: #111114"></div><div style="width: 40%; background: #A9ADF0"></div><div style="width: 25%; background: #E6E6EE"></div></div>
+    </div>
+    <div>
+      <div style="display: flex; justify-content: space-between; font-size: 14px"><span style="font-weight: 600">Validitetsmått</span><span style="color: #55555F">på 6 av 9 tentor</span></div>
+      <div style="display: flex; height: 10px; border-radius: 5px; overflow: hidden; margin-top: 6px"><div style="width: 20%; background: #111114"></div><div style="width: 30%; background: #A9ADF0"></div><div style="width: 50%; background: #E6E6EE"></div></div>
+    </div>
+    <div>
+      <div style="display: flex; justify-content: space-between; font-size: 14px"><span style="font-weight: 600">DDD &amp; läkemedelsanvändning</span><span style="color: #55555F">på 8 av 9 tentor</span></div>
+      <div style="display: flex; height: 10px; border-radius: 5px; overflow: hidden; margin-top: 6px"><div style="width: 10%; background: #111114"></div><div style="width: 25%; background: #A9ADF0"></div><div style="width: 65%; background: #E6E6EE"></div></div>
+    </div>
+    <div>
+      <div style="display: flex; justify-content: space-between; font-size: 14px"><span style="font-weight: 600">Följsamhet</span><span style="color: #55555F">på 4 av 9 tentor</span></div>
+      <div style="display: flex; height: 10px; border-radius: 5px; overflow: hidden; margin-top: 6px"><div style="width: 0%; background: #111114"></div><div style="width: 20%; background: #A9ADF0"></div><div style="width: 80%; background: #E6E6EE"></div></div>
+    </div>
+    <div>
+      <div style="display: flex; justify-content: space-between; font-size: 14px"><span style="font-weight: 600">Hälsoekonomi</span><span style="color: #55555F">på 9 av 9 tentor</span></div>
+      <div style="display: flex; height: 10px; border-radius: 5px; overflow: hidden; margin-top: 6px"><div style="width: 55%; background: #111114"></div><div style="width: 30%; background: #A9ADF0"></div><div style="width: 15%; background: #E6E6EE"></div></div>
+    </div>
+    <div style="background: #FFE3BF; border-radius: 16px; padding: 10px 12px">
+      <div style="display: flex; justify-content: space-between; font-size: 14px"><span style="font-weight: 600">Forskningsetik</span><span style="font-size: 12px; font-weight: 700">Inga frågor än</span></div>
+      <div style="font-size: 12px; color: #44444C; margin-top: 4px">Lucka – skapa frågor från föreläsningen i fas 3</div>
+    </div>
+  </div>
+
+  <a href="Flerval.dc.html" style="margin-top: auto; text-decoration: none; color: #111114; background: #F2C84B; border-radius: 999px; height: 58px; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 18px; font-weight: 600">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4 14h7l-1 8 9-12h-7z"></path></svg>Plugga luckorna</a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
