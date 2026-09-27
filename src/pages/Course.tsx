@@ -18,14 +18,14 @@ export function Course() {
     const dueToday = buildQueue(cd.questions, cd.states, now, { limit: 999, newLimit: 0 }).length
     const exams = [...new Set(cd.questions.map((q) => q.examId).filter(Boolean) as string[])].sort().reverse()
     const forecast = examDate && examDate > now ? predictedRecall(cd, examDate) : undefined
-    return { cd, stats, total, mastered, dueToday, exams, examDate, forecast }
+    const daysLeft = examDate ? Math.ceil((examDate - now) / 86_400_000) : undefined
+    return { cd, stats, total, mastered, dueToday, exams, examDate, forecast, daysLeft }
   }, [courseId])
 
   if (loading) return null
   if (!data) return <p>Kursen finns inte. <Link to="/">Till biblioteket</Link></p>
-  const { cd, stats, total, mastered, dueToday, exams, examDate, forecast } = data
+  const { cd, stats, total, mastered, dueToday, exams, examDate, forecast, daysLeft } = data
   const pct = total ? Math.round((mastered / total) * 100) : 0
-  const daysLeft = examDate ? Math.ceil((examDate - Date.now()) / 86_400_000) : undefined
 
   return (
     <section className="course">

@@ -79,3 +79,31 @@ export const Mascot = ({ size = 64 }: { size?: number }) => (
     <circle cx="75" cy="58" r="4.5" fill="#111114" />
   </svg>
 )
+export const IconSkip = (p: P) => (
+  <svg {...base(p)} strokeWidth={2.6}>
+    <path d="m6 6 7 6-7 6M17 6v12" />
+  </svg>
+)
+export const IconArrow = (p: P) => (
+  <svg {...base(p)} strokeWidth={2.6}>
+    <path d="M5 12h14M13 6l6 6-6 6" />
+  </svg>
+)
+export const IconX = (p: P) => (
+  <svg {...base(p)} strokeWidth={3}>
+    <path d="M7 7l10 10M17 7 7 17" />
+  </svg>
+)
+
+/** The mascot celebrating (result screens). */
+export const MascotHappy = ({ size = 96 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 120 120" aria-hidden="true">
+    <path d="M60 8v14M92 16l-8 12M110 44l-14 4M28 16l8 12M10 44l14 4" stroke="#F2C84B" strokeWidth="6" strokeLinecap="round" />
+    <path d="M100 76l-12-3M20 76l12-3" stroke="#F4B9B3" strokeWidth="6" strokeLinecap="round" />
+    <g transform="rotate(-35 60 74)">
+      <rect x="22" y="54" width="76" height="40" rx="20" fill="#2436D9" stroke="#111114" strokeWidth="4.5" />
+      <path d="M60 54H42a20 20 0 0 0 0 40h18z" fill="#fff" stroke="#111114" strokeWidth="4.5" />
+    </g>
+    <path d="M45 76q4-6 8 0M67 70q4-6 8 0" fill="none" stroke="#111114" strokeWidth="4" strokeLinecap="round" />
+  </svg>
+)
