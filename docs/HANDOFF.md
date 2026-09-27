@@ -57,7 +57,9 @@ Done and tested (31 tests):
 10. [x] **PWA**: `vite-plugin-pwa` (autoUpdate + "Ny version – ladda om" banner), manifest (the mascot icon, Swedish name), offline caching including Google Fonts, `base` set for GitHub Pages.
     - Done: `vite.config.ts` (VitePWA, `base: '/studieapp/'` for build and preview), `src/ui/UpdateBanner.tsx`, icons in `public/` (rendered from the mascot SVG: 192, 512, maskable 512, apple-touch 180).
     - Decisions: `registerType: 'autoUpdate'` with `onNeedReload`, so a new worker takes over at once but the page shows "Ny version av appen finns. Ladda om" instead of reloading mid-question. It also listens for `controllerchange` (a worker can activate before workbox-window listens) and checks for updates hourly, because with hash routing the app never navigates. Google Fonts CSS is StaleWhileRevalidate and the font files CacheFirst for a year. Verified with `vite preview`: works offline after the first visit, and the banner appears after a new build is picked up. If the repo is renamed, change `PAGES_BASE` in `vite.config.ts`.
-11. [ ] **Deploy**: a GitHub Actions workflow that builds and deploys to Pages on push to main (runs `npm test` first).
+11. [x] **Deploy**: a GitHub Actions workflow that builds and deploys to Pages on push to main (runs `npm test` first).
+    - Done: `.github/workflows/deploy.yml`. Every push and PR runs `npm ci`, lint, `npm test` and `npm run build`; only a push to `main` (or a manual run on `main`) uploads `dist` and deploys to Pages.
+    - **Owner action needed once:** in the GitHub repo, Settings → Pages → Build and deployment → Source: "GitHub Actions". The site will be at `https://<owner>.github.io/studieapp/`. I could not run the workflow from here; it has only been checked as valid YAML and by running the same steps locally.
 12. [ ] **Dexie migration test harness**, ready for the first v2 schema change.
 
 ## Local-only work (on the owner's Mac, needs the PDFs; NOT for cloud)
