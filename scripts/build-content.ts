@@ -20,6 +20,8 @@ type Part = Partial<Omit<ContentBundle, 'course' | 'format' | 'version'>> & {
   examInfo?: ContentBundle['course']['examInfo']
   sourceIds?: string[]
   notes?: string[]
+  /** questionId → articleId, for exam article-review questions whose article lives in another part. */
+  articleLinks?: Record<string, string>
 }
 
 const MIME: Record<string, string> = { '.png': 'image/png', '.jpg': 'image/jpeg', '.pdf': 'application/pdf' }
@@ -84,6 +86,8 @@ function validate(bundle: ContentBundle): string[] {
       if (a.provenance !== 'student' && (a.awarded !== undefined || a.max !== undefined))
         problems.push(`${where}: score on a non-student answer`)
     }
+    if (q.articleId && !bundle.articles.some((a) => a.id === q.articleId))
+      problems.push(`${where}: unknown article ${q.articleId}`)
     if (q.origin === 'generated' && !q.evidence?.length) problems.push(`${where}: generated card without evidence`)
     const text = JSON.stringify(q)
     for (const re of PERSONAL_DATA) if (re.test(text)) problems.push(`${where}: possible personal data (${re})`)
@@ -114,6 +118,7 @@ function main() {
     assets: [],
   }
   const notes: string[] = []
+  const articleLinks: Record<string, string> = {}
 
   const partsDir = join(dir, 'parts')
   for (const file of readdirSync(partsDir).filter((f) => f.endsWith('.json')).sort()) {
@@ -128,6 +133,12 @@ function main() {
     bundle.articles.push(...(part.articles ?? []))
     if (part.examInfo && !bundle.course.examInfo) bundle.course.examInfo = part.examInfo
     for (const n of part.notes ?? []) notes.push(`${file}: ${n}`)
+    Object.assign(articleLinks, part.articleLinks)
+  }
+  for (const [qid, articleId] of Object.entries(articleLinks)) {
+    const q = questions.get(qid)
+    if (q) q.articleId ??= articleId
+    else notes.push(`articleLinks: no question ${qid}`)
   }
 
   // Inline asset files as base64 so the bundle is one self-contained file.
