@@ -1,10 +1,10 @@
 import { useMemo, useState } from 'react'
 import { Link, Navigate, useParams, useSearchParams } from 'react-router-dom'
 import type { PracticeArticle, ReviewTemplate } from '../content/schema'
-import { SETTINGS } from '../data/settings'
-import { getSetting, loadCourseData, loadCourses, type CourseData } from '../data/queries'
+import { loadCourseData, loadCourses, loadPlanContext, type CourseData, type PlanContext } from '../data/queries'
 import { saveReview } from '../data/review'
 import { db, type ReviewState } from '../db/db'
+import { dailyQueue } from '../lib/examMode'
 import { buildAheadQueue, summarize, type SessionResult } from '../lib/practice'
 import { buildQueue, type QueueItem } from '../lib/session'
 import { topicName } from '../lib/topics'
@@ -36,6 +36,7 @@ export function PracticeIndex() {
 
 interface Loaded {
   cd: CourseData
+  ctx: PlanContext
   examDate?: number
   articles: PracticeArticle[]
   templates: ReviewTemplate[]
@@ -49,12 +50,12 @@ export function Practice() {
   const { data, loading } = useAsync(async (): Promise<Loaded | undefined> => {
     const cd = await loadCourseData(courseId)
     if (!cd) return undefined
-    const [examDate, articles, templates] = await Promise.all([
-      getSetting<number | undefined>(SETTINGS.examDate(courseId), undefined),
+    const [ctx, articles, templates] = await Promise.all([
+      loadPlanContext(courseId, Date.now()),
       db.articles.where({ courseId }).toArray(),
       db.templates.where({ courseId }).toArray(),
     ])
-    return { cd, examDate, articles, templates }
+    return { cd, ctx, examDate: ctx.examDate, articles, templates }
   }, [courseId])
 
   if (loading) return null
@@ -68,7 +69,7 @@ function Session({ data, topic, examId }: { data: Loaded; topic?: string; examId
   const [queue, setQueue] = useState<QueueItem[]>(() =>
     examId
       ? buildQueue(data.cd.questions, data.cd.states, Date.now(), { examId, limit: 999, newLimit: 999 })
-      : buildQueue(data.cd.questions, data.cd.states, Date.now(), { topic }),
+      : dailyQueue({ questions: data.cd.questions, states: data.cd.states, now: Date.now(), topic, ...data.ctx }),
   )
   const [pos, setPos] = useState(0)
   const [round, setRound] = useState(0)

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { learnedThisWeek, streakDays } from './stats'
+import { learnedThisWeek, startedToday, streakDays } from './stats'
 
 const at = (d: number, h = 12) => new Date(2026, 8, d, h).getTime() // September 2026, local time
 
@@ -25,5 +25,17 @@ describe('streakDays', () => {
     expect(streakDays([at(23), at(25)], at(26, 9))).toBe(1)
     expect(streakDays([at(20)], at(26))).toBe(0)
     expect(streakDays([], at(26))).toBe(0)
+  })
+})
+
+describe('startedToday', () => {
+  it('counts questions first reviewed today', () => {
+    const log = [
+      { courseId: 'c', questionId: 'a', ts: at(26, 9) },
+      { courseId: 'c', questionId: 'a', ts: at(26, 10) },
+      { courseId: 'c', questionId: 'b', ts: at(25) },
+      { courseId: 'c', questionId: 'b', ts: at(26, 11) },
+    ]
+    expect(startedToday(log, at(26, 20))).toBe(1)
   })
 })

@@ -26,3 +26,14 @@ export function streakDays(timestamps: number[], now: number): number {
   }
   return streak
 }
+
+/** Questions whose very first review was today (new questions started today). */
+export function startedToday(log: { questionId: string; courseId: string; ts: number }[], now: number): number {
+  const first = new Map<string, number>()
+  for (const e of log) {
+    const k = `${e.courseId}|${e.questionId}`
+    if (!first.has(k) || e.ts < first.get(k)!) first.set(k, e.ts)
+  }
+  const today = dayIndex(now)
+  return [...first.values()].filter((ts) => dayIndex(ts) === today).length
+}

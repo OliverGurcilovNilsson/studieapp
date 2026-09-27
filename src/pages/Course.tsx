@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
-import { SETTINGS } from '../data/settings'
-import { getSetting, loadCourseData, predictedRecall, topicStats } from '../data/queries'
+import { loadCourseData, loadPlanContext, predictedRecall, topicStats } from '../data/queries'
+import { dailyQueue, daysUntil, forecastScore, isExamModeActive } from '../lib/examMode'
 import { buildQueue } from '../lib/session'
 import { topicColor, topicName } from '../lib/topics'
 import { IconBack, IconBolt, Mascot, TileIconExam, TileIconMap, TileIconMistakes, TileIconPractice } from '../ui/icons'
@@ -12,20 +12,26 @@ export function Course() {
     const cd = await loadCourseData(courseId)
     if (!cd) return undefined
     const now = Date.now()
-    const examDate = await getSetting<number | undefined>(SETTINGS.examDate(courseId), undefined)
+    const ctx = await loadPlanContext(courseId, now)
+    const { examDate } = ctx
     const stats = topicStats(cd, now)
     const total = stats.reduce((a, t) => a + t.total, 0)
     const mastered = stats.reduce((a, t) => a + t.mastered, 0)
-    const dueToday = buildQueue(cd.questions, cd.states, now, { limit: 999, newLimit: 0 }).length
+    const examMode = isExamModeActive(examDate, now)
+    // In exam mode "today" is the paced plan (due + today's new); otherwise the due reviews.
+    const dueToday = examMode
+      ? dailyQueue({ questions: cd.questions, states: cd.states, now, ...ctx }).length
+      : buildQueue(cd.questions, cd.states, now, { limit: 999, newLimit: 0 }).length
     const exams = [...new Set(cd.questions.map((q) => q.examId).filter(Boolean) as string[])].sort().reverse()
-    const forecast = examDate && examDate > now ? predictedRecall(cd, examDate) : undefined
-    const daysLeft = examDate ? Math.ceil((examDate - now) / 86_400_000) : undefined
-    return { cd, stats, total, mastered, dueToday, exams, examDate, forecast, daysLeft }
+    const forecast = examMode ? predictedRecall(cd, examDate) : undefined
+    const points = examMode && cd.course.examInfo ? forecastScore(cd.questions, cd.states, examDate, cd.course.examInfo) : undefined
+    const daysLeft = examMode ? daysUntil(examDate, now) : undefined
+    return { cd, stats, total, mastered, dueToday, exams, examDate, forecast, points, daysLeft }
   }, [courseId])
 
   if (loading) return null
   if (!data) return <p>Kursen finns inte. <Link to="/">Till biblioteket</Link></p>
-  const { cd, stats, total, mastered, dueToday, exams, examDate, forecast, daysLeft } = data
+  const { cd, stats, total, mastered, dueToday, exams, examDate, forecast, points, daysLeft } = data
   const pct = total ? Math.round((mastered / total) * 100) : 0
 
   return (
@@ -58,10 +64,21 @@ export function Course() {
           <div className="bar">
             <span style={{ width: `${pct}%` }} />
           </div>
+          {points && (
+            <div className="forecast-points">
+              <span className="eyebrow">Tentaläge · {daysLeft} {daysLeft === 1 ? 'dag' : 'dagar'} kvar</span>
+              <span>
+                Beräknad poäng{' '}
+                <strong>
+                  {points.points}/{points.max} → {points.grade}
+                </strong>
+              </span>
+            </div>
+          )}
           {forecast !== undefined && (
             <p className="forecast">
               Beräknad kunskap på tentadagen: <strong>{Math.round(forecast * 100)} %</strong>
-              <span className="muted"> · {daysLeft} dagar kvar (uppskattning)</span>
+              <span className="muted"> · uppskattning</span>
             </p>
           )}
           {!examDate && (

@@ -2,6 +2,8 @@ import type { Course } from '../content/schema'
 import { db, type ReviewState, type StoredQuestion } from '../db/db'
 import { retrievability } from '../lib/scheduler'
 import { isPractisable } from '../lib/session'
+import { startedToday } from '../lib/stats'
+import { DEFAULT_MINUTES_PER_DAY, SETTINGS } from './settings'
 
 export interface CourseData {
   course: Course
@@ -65,4 +67,20 @@ export async function getSetting<T>(key: string, fallback: T): Promise<T> {
 
 export async function setSetting(key: string, value: unknown) {
   await db.settings.put({ key, value })
+}
+
+export interface PlanContext {
+  examDate?: number
+  minutesPerDay: number
+  startedToday: number
+}
+
+/** Settings and log facts the daily plan needs. */
+export async function loadPlanContext(courseId: string, now: number): Promise<PlanContext> {
+  const [examDate, minutesPerDay, log] = await Promise.all([
+    getSetting<number | undefined>(SETTINGS.examDate(courseId), undefined),
+    getSetting(SETTINGS.minutesPerDay, DEFAULT_MINUTES_PER_DAY),
+    db.reviewLog.where({ courseId }).toArray(),
+  ])
+  return { examDate, minutesPerDay, startedToday: startedToday(log, now) }
 }
