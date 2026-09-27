@@ -29,7 +29,8 @@ const DECK_COLORS = ['var(--yellow)', 'var(--lavender)', 'var(--pink)', 'var(--m
 
 /** Stable pastel per topic, like the mockup's deck cards. */
 export function topicColor(id: string): string {
-  let h = 0
-  for (const c of id) h = (h * 31 + c.charCodeAt(0)) >>> 0
+  // FNV-1a: a plain sum-like hash spreads similar ids over too few colours.
+  let h = 0x811c9dc5
+  for (const c of id) h = Math.imul(h ^ c.charCodeAt(0), 16777619) >>> 0
   return DECK_COLORS[h % DECK_COLORS.length]
 }

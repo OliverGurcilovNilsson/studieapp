@@ -107,3 +107,71 @@ export const MascotHappy = ({ size = 96 }: { size?: number }) => (
     <path d="M45 76q4-6 8 0M67 70q4-6 8 0" fill="none" stroke="#111114" strokeWidth="4" strokeLinecap="round" />
   </svg>
 )
+
+// Illustrations from the mockups. They sit on accent fills, so they always use the fixed ink colour.
+const ink = { fill: 'none', stroke: '#111114', strokeWidth: 2.2, strokeLinecap: 'round', strokeLinejoin: 'round', 'aria-hidden': true } as const
+
+const DECK_ICONS = [
+  <svg key="chart" width="34" height="30" viewBox="0 0 34 30" {...ink}>
+    <path d="M3 3v24h28" />
+    <path d="M7 21l7-8 5 4 10-12" />
+  </svg>,
+  <svg key="nodes" width="32" height="32" viewBox="0 0 32 32" {...ink}>
+    <circle cx="8" cy="8" r="4" fill="#F2C84B" />
+    <circle cx="24" cy="8" r="4" fill="#ffffff" />
+    <circle cx="16" cy="25" r="4" fill="#F4B9B3" />
+    <path d="M11 10l3 11M21 10l-3 11M12 8h8" />
+  </svg>,
+  <svg key="clipboard" width="28" height="32" viewBox="0 0 28 32" {...ink}>
+    <rect x="3" y="4" width="22" height="26" rx="3" fill="#ffffff" />
+    <rect x="9" y="1.5" width="10" height="5" rx="1.5" fill="#F2C84B" />
+    <path d="M8 14l2 2 4-4M8 23l2 2 4-4M17 15h4M17 24h4" />
+  </svg>,
+  <svg key="coin" width="32" height="32" viewBox="0 0 32 32" {...ink}>
+    <circle cx="16" cy="16" r="12" fill="#F2C84B" />
+    <path d="M19.5 11.5c-1-1.2-2.2-1.6-3.5-1.6-2 0-3.5 1-3.5 2.8 0 4 7.2 2.2 7.2 6.4 0 1.9-1.7 3-3.7 3-1.5 0-2.8-.5-3.8-1.7M16 7.5v2.4M16 22.2v2.3" />
+  </svg>,
+]
+
+/** A stable illustration per deck. */
+export function DeckIcon({ seed }: { seed: string }) {
+  let h = 7
+  for (const c of seed) h = (h * 33 + c.charCodeAt(0)) >>> 0
+  return DECK_ICONS[h % DECK_ICONS.length]
+}
+
+export const TileIconPractice = () => (
+  <svg width="40" height="40" viewBox="0 0 40 40" {...ink}>
+    <path d="M22 3 8 22h11l-2 15 15-20H21z" fill="#F2C84B" />
+  </svg>
+)
+export const TileIconExam = () => (
+  <svg width="40" height="40" viewBox="0 0 40 40" {...ink}>
+    <circle cx="20" cy="22" r="14" fill="#B7BAF6" />
+    <path d="M20 14v8l5 4M16 4h8M20 4v4" />
+  </svg>
+)
+export const TileIconMistakes = () => (
+  <svg width="40" height="40" viewBox="0 0 40 40" {...ink}>
+    <rect x="5" y="8" width="26" height="28" rx="4" fill="#F4B9B3" />
+    <rect x="10" y="4" width="26" height="28" rx="4" fill="#ffffff" />
+    <path d="M18 13l10 10M28 13 18 23" />
+  </svg>
+)
+export const TileIconMap = () => (
+  <svg width="40" height="40" viewBox="0 0 40 40" {...ink}>
+    <path d="M4 9l10-5 12 5 10-5v27l-10 5-12-5-10 5z" fill="#A6E3C8" />
+    <path d="M14 4v27M26 9v27" />
+  </svg>
+)
+export const IconFlame = () => (
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="#F2C84B" stroke="#111114" strokeWidth={1.8} strokeLinejoin="round" aria-hidden="true">
+    <path d="M12 2.5c1.2 4.2 5.5 5.8 5.5 11a5.5 5.5 0 0 1-11 0c0-2.8 1.6-4.4 2.7-5.5.5 2.2 1.6 3.3 2.8 3.3 0-3.3-1.1-5.4 0-8.8z" />
+  </svg>
+)
+export const IconCards = () => (
+  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="#111114" strokeWidth={2} strokeLinejoin="round" aria-hidden="true">
+    <rect x="3" y="7" width="16" height="18" rx="3" fill="#2436D9" />
+    <rect x="9" y="3" width="16" height="18" rx="3" fill="#B7BAF6" />
+  </svg>
+)

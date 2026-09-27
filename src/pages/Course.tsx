@@ -3,7 +3,7 @@ import { SETTINGS } from '../data/settings'
 import { getSetting, loadCourseData, predictedRecall, topicStats } from '../data/queries'
 import { buildQueue } from '../lib/session'
 import { topicColor, topicName } from '../lib/topics'
-import { IconBack, IconBolt, Mascot } from '../ui/icons'
+import { IconBack, IconBolt, Mascot, TileIconExam, TileIconMap, TileIconMistakes, TileIconPractice } from '../ui/icons'
 import { useAsync } from '../ui/useAsync'
 
 export function Course() {
@@ -50,9 +50,9 @@ export function Course() {
       </div>
 
       <div className="course-top">
-        <div className="card">
+        <div>
           <div className="row-between">
-            <span>Behärskat</span>
+            <span className="muted">Behärskat</span>
             <strong>{pct}%</strong>
           </div>
           <div className="bar">
@@ -65,25 +65,56 @@ export function Course() {
             </p>
           )}
           {!examDate && (
-            <p className="muted small">
+            <p className="forecast muted small">
               <Link to="/installningar">Ange tentadatum</Link> så planeras repetitionen fram till tentan.
             </p>
           )}
         </div>
 
-        <div className="card row-between">
+        <div className="tiles">
+          <Link to={`/ova/${courseId}`} className="tile">
+            <TileIconPractice />
+            <div>
+              <strong>Övningspass</strong>
+              <span className="muted small">Blandade ämnen</span>
+            </div>
+          </Link>
+          <Link to={`/kurs/${courseId}/tentasimulering`} className="tile">
+            <TileIconExam />
+            <div>
+              <strong>Tentasimulering</strong>
+              <span className="muted small">Tidsatt, som på riktigt</span>
+            </div>
+          </Link>
+          <Link to={`/kurs/${courseId}/felbank`} className="tile">
+            <TileIconMistakes />
+            <div>
+              <strong>Felbank</strong>
+              <span className="muted small">Frågor du missar</span>
+            </div>
+          </Link>
+          <Link to={`/kurs/${courseId}/tackning`} className="tile">
+            <TileIconMap />
+            <div>
+              <strong>Täckningskarta</strong>
+              <span className="muted small">Hitta luckorna</span>
+            </div>
+          </Link>
+        </div>
+
+        <div className="card due-card">
           <div>
             <div className="muted small">att repetera</div>
             <h3>{dueToday ? `${dueToday} kort väntar idag` : 'Inget att repetera just nu'}</h3>
           </div>
           <span className="count-bubble">{dueToday}</span>
         </div>
-      </div>
 
-      <Link to={`/ova/${courseId}`} className="btn btn-primary btn-block">
-        <IconBolt width={18} height={18} />
-        Starta plugget
-      </Link>
+        <Link to={`/ova/${courseId}`} className="btn btn-primary btn-block">
+          <IconBolt width={18} height={18} />
+          Starta plugget
+        </Link>
+      </div>
 
       <h2 className="section-title">Ämnen</h2>
       <div className="grid-2 grid-auto">
