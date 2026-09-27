@@ -5,6 +5,8 @@ export const SETTINGS = {
   theme: 'theme',
   lastBackupAt: 'lastBackupAt',
   persistRequested: 'persistRequested',
+  /** The exam simulation in progress, so a reload never loses her answers. */
+  examSim: (courseId: string) => `examSim:${courseId}`,
 } as const
 
 export const DEFAULT_MINUTES_PER_DAY = 30

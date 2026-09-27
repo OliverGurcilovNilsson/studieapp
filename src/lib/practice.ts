@@ -81,3 +81,9 @@ export function questionLabel(q: Question, topicName: (t: string) => string): st
     .filter(Boolean)
     .join(' · ')
 }
+
+/** A session over exactly these questions, in this order (e.g. "Repetera missarna" after a simulation). */
+export function pickQuestions(questions: Question[], states: Map<string, ReviewState>, ids: string[]): QueueItem[] {
+  const byId = new Map(questions.map((q) => [q.id, q]))
+  return ids.filter((id) => byId.has(id) && isPractisable(byId.get(id)!)).map((id) => ({ question: byId.get(id)!, state: states.get(id) }))
+}

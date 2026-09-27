@@ -802,3 +802,191 @@ details > summary::-webkit-details-marker {
   display: none;
 }
 .nowrap { white-space: nowrap; }
+
+/* ---------- Exam simulation ---------- */
+
+.sim-picker > p {
+  margin: 18px 0;
+}
+
+.sim-exams {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.sim-exam {
+  border: 0;
+  text-align: left;
+  align-items: flex-start;
+}
+
+.sim-start {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+}
+
+.sim-timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 0;
+  background: none;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 22px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  min-height: 44px;
+}
+
+.sim-timer .small {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.sim-timer.is-low > span:first-child {
+  color: #c2410c;
+}
+
+.sim-nav {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 14px 0 4px;
+  scrollbar-width: thin;
+}
+
+.sim-chip {
+  flex: 0 0 auto;
+  min-width: 40px;
+  height: 40px;
+  padding: 0 10px;
+  border-radius: 12px;
+  border: 2px solid var(--line);
+  background: var(--bg);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.sim-chip.is-done {
+  background: var(--peri-soft);
+  border-color: var(--peri-soft);
+  color: var(--on-accent);
+}
+
+.sim-chip.is-current {
+  border-color: var(--ink);
+}
+
+.sim-paused {
+  min-height: 50dvh;
+}
+
+.sim-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.sim-actions .link-btn {
+  align-self: center;
+  font-size: 14px;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+}
+
+.stepper .icon-btn {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.stepper output {
+  min-width: 110px;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 24px;
+}
+
+.grade {
+  display: inline-block;
+  padding: 0 10px;
+  border-radius: var(--pill);
+  color: var(--on-accent);
+}
+
+.grade-U {
+  background: var(--pink);
+}
+
+.grade-G {
+  background: var(--yellow);
+}
+
+.grade-VG {
+  background: var(--mint);
+}
+
+.score-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.small-row {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.small-row span:first-child {
+  font-weight: 600;
+}
+
+.weak-title {
+  margin-top: 18px;
+}
+
+.weak {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.weak span {
+  background: var(--pink);
+  color: var(--on-accent);
+  border-radius: var(--pill);
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.sim-result details.more {
+  margin-top: 20px;
+}
+
+.per-question {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+}
+
+.per-question li {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--line);
+}

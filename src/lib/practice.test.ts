@@ -8,6 +8,7 @@ import {
   isSelfGraded,
   multiOutcome,
   numericOutcome,
+  pickQuestions,
   questionLabel,
   summarize,
 } from './practice'
@@ -86,5 +87,12 @@ describe('questionLabel', () => {
     expect(questionLabel(q('a', { points: 1.5 }), (t) => t.toUpperCase())).toBe('T · Fritext · 1,5 p')
     expect(questionLabel(q('a', { type: 'mcq' }), (t) => t)).toBe('t · Flerval')
     expect(questionLabel(q('a', { type: 'article_review' }), () => 'Artikelgranskning')).toBe('Artikelgranskning')
+  })
+})
+
+describe('pickQuestions', () => {
+  it('keeps the given order and drops unknown ids', () => {
+    const queue = pickQuestions([q('a'), q('b'), q('c')], new Map(), ['c', 'x', 'a'])
+    expect(queue.map((i) => i.question.id)).toEqual(['c', 'a'])
   })
 })

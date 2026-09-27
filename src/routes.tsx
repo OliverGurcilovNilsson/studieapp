@@ -1,5 +1,6 @@
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { Course } from './pages/Course'
+import { ExamSim } from './pages/ExamSim'
 import { Library } from './pages/Library'
 import { Practice, PracticeIndex } from './pages/Practice'
 import { Settings } from './pages/Settings'
@@ -19,6 +20,7 @@ export function AppRoutes() {
         </Route>
         {/* A practice session is full screen, without the navigation (mockups 3–6). */}
         <Route path="ova/:courseId" element={<Practice />} />
+        <Route path="kurs/:courseId/tentasimulering" element={<ExamSim />} />
       </Routes>
     </HashRouter>
   )
