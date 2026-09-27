@@ -230,7 +230,7 @@ export function QuestionRunner({ courseId, item, examDate, article, onDone }: Pr
               {answered && q.answers.length > 0 && (
                 <details className="more">
                   <summary>Visa facit och förklaring</summary>
-                  <AnswerPanel question={q} />
+                  <AnswerPanel question={q} courseId={courseId} state={item.state} />
                 </details>
               )}
             </>
@@ -289,7 +289,7 @@ export function QuestionRunner({ courseId, item, examDate, article, onDone }: Pr
               {answered && q.answers.length > 0 && (
                 <details className="more">
                   <summary>Visa facit och studentsvar</summary>
-                  <AnswerPanel question={q} />
+                  <AnswerPanel question={q} courseId={courseId} state={item.state} />
                 </details>
               )}
             </>
@@ -319,7 +319,7 @@ export function QuestionRunner({ courseId, item, examDate, article, onDone }: Pr
                   <RichText text={draft} />
                 </div>
               )}
-              <AnswerPanel question={q} />
+              <AnswerPanel question={q} courseId={courseId} state={item.state} />
             </>
           )}
         </div>

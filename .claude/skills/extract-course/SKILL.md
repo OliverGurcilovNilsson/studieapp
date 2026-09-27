@@ -59,7 +59,7 @@ One worker processes one source and writes one `parts/<sourceId>.json`. Workers 
 - General lessons inside those answers (e.g. the clues that reveal a study design) also become normal `free_text` / `flashcard` questions with `origin: 'seminar'`.
 
 ## Generated cards (lectures)
-Only generate from a lecture when asked. Every card must cite `evidence` (source, pages, a quote that appears on those pages), `origin: 'generated'`, `status: 'unverified'`. Use facts from the slides only. Match the style of past exam questions on the same topic.
+Only generate from a lecture when asked. Every card must cite `evidence` (source, pages, a quote that appears verbatim in those pages' text), `origin: 'generated'`, `status: 'unverified'`, and its answer has provenance `generated` (sourceId = the lecture, pages set). Use facts from the slides only. Match the style of past exam questions on the same topic.
 
 ## Output checklist for each part file
 - [ ] Valid JSON, and the arrays match `schema.ts`

@@ -1013,3 +1013,30 @@ h1 {
 .update-banner .btn-small {
   margin-top: 0;
 }
+
+/* ---------- AI-generated lecture cards ---------- */
+
+.badge-soft {
+  background: var(--peri-soft);
+  color: var(--on-accent);
+}
+
+.answer-generated {
+  border: 2px dashed var(--peri);
+  border-radius: var(--radius-m);
+  padding: 14px 16px;
+}
+
+.answer-generated header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.row-gap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}

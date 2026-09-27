@@ -25,6 +25,8 @@ export interface ReviewState {
   card: StoredCard
   /** An AI-generated card she has approved. */
   approved?: boolean
+  /** A generated card she reported as wrong: hidden everywhere, kept so a re-import doesn't bring it back. */
+  rejected?: boolean
 }
 
 /** ts-fsrs Card with dates as epoch ms, so it survives IndexedDB and JSON export unchanged. */

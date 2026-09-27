@@ -1,5 +1,6 @@
 // Täckningskarta: how much of each topic she has mastered, seen or not started. Pure functions.
 import { hasTrustedAnswer, type Objective, type Question } from '../content/schema'
+import { isKeyTrusted } from './trust'
 import type { ReviewState } from '../db/db'
 import { isSelfGraded } from './practice'
 import { interleave, isPractisable, type QueueItem } from './session'
@@ -13,7 +14,7 @@ export const MASTERED_STABILITY_DAYS = 21
  */
 export function isMastered(q: Question, state: ReviewState | undefined): boolean {
   if (!state || state.card.stability < MASTERED_STABILITY_DAYS) return false
-  return !isSelfGraded(q) || hasTrustedAnswer(q)
+  return isKeyTrusted(q, state)
 }
 
 export interface TopicCoverage {
@@ -55,7 +56,7 @@ export function coverage(
     else if (s) r.seen++
     else r.notStarted++
     // Own notes are a reference with their own mild label, not "Osäkert facit" (docs/PLAN.md).
-    if (isSelfGraded(q) && !hasTrustedAnswer(q) && !q.answers.some((a) => a.provenance === 'own_notes')) r.uncertain++
+    if (isSelfGraded(q) && !hasTrustedAnswer(q) && !q.answers.some((a) => a.provenance === 'own_notes' || a.provenance === 'generated')) r.uncertain++
   }
   const topics = [...rows.values()]
     .map(({ examIds, ...r }) => ({ ...r, exams: examIds.size }))

@@ -23,7 +23,12 @@ export async function loadCourseData(courseId: string): Promise<CourseData | und
     db.questions.where({ courseId }).toArray(),
     db.reviewStates.where({ courseId }).toArray(),
   ])
-  return { course, questions, states: new Map(states.map((s) => [s.questionId, s])) }
+  const rejected = new Set(states.filter((s) => s.rejected).map((s) => s.questionId))
+  return {
+    course,
+    questions: questions.filter((q) => !rejected.has(q.id)),
+    states: new Map(states.map((s) => [s.questionId, s])),
+  }
 }
 
 export interface TopicStats {

@@ -16,9 +16,13 @@ export interface SaveReviewInput {
 /** Schedules the card and writes the new state and the log entry in one transaction. */
 export async function saveReview(db: StudyDb, input: SaveReviewInput): Promise<ReviewState> {
   const { courseId, questionId, state, grade, guessed, now, examDate, durationMs } = input
-  const card = review(state?.card ?? newCard(now), grade, now, { guessed, examDate })
-  const next: ReviewState = { ...state, courseId, questionId, due: card.due, card }
+  let next!: ReviewState
   await db.transaction('rw', db.reviewStates, db.reviewLog, async () => {
+    // Read the stored state, not the caller's snapshot: she may have approved the card
+    // (setCardVerdict) after the question opened, and that flag must survive the rating.
+    const current = (await db.reviewStates.get([courseId, questionId])) ?? state
+    const card = review(current?.card ?? newCard(now), grade, now, { guessed, examDate })
+    next = { ...current, courseId, questionId, due: card.due, card }
     await db.reviewStates.put(next)
     await db.reviewLog.add({ courseId, questionId, ts: now, rating: grade, ...(guessed ? { guessed } : {}), durationMs })
   })

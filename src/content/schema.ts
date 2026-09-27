@@ -4,8 +4,11 @@
 export const BUNDLE_FORMAT = 'studieapp-course'
 export const BUNDLE_VERSION = 1
 
-/** Who wrote an answer. Only `official`, or `student` with awarded === max, counts as trusted. */
-export type Provenance = 'official' | 'student' | 'own_notes'
+/**
+ * Who wrote an answer. Only `official`, or `student` with awarded === max, counts as trusted.
+ * `generated`: AI-written from lecture slides (cites `evidence`); trusted only once she approves the card.
+ */
+export type Provenance = 'official' | 'student' | 'own_notes' | 'generated'
 
 export type QuestionType =
   | 'mcq' // exactly one correct option

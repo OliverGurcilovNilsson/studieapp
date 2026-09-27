@@ -1,10 +1,10 @@
 // Tentaläge: the exam-aware daily plan and forecast (docs/PLAN.md, "Tentaläge").
 // Pure functions only; the pages load the data and pass it in.
 import { Rating } from 'ts-fsrs'
-import { hasTrustedAnswer, type Course, type Question, type QuestionType } from '../content/schema'
+import { type Course, type Question, type QuestionType } from '../content/schema'
+import { isKeyTrusted } from './trust'
 import type { ReviewState } from '../db/db'
 import { buildQueue, interleave, isPractisable, type QueueItem } from './session'
-import { isSelfGraded } from './practice'
 import { newCard, retrievability, review } from './scheduler'
 
 const DAY = 86_400_000
@@ -132,8 +132,8 @@ export function planDay({
 }
 
 /** Only questions with a trustworthy key say anything about her exam score. */
-function countsForForecast(q: Question): boolean {
-  return isPractisable(q) && (!isSelfGraded(q) || hasTrustedAnswer(q))
+function countsForForecast(q: Question, state: ReviewState | undefined): boolean {
+  return isPractisable(q) && isKeyTrusted(q, state)
 }
 
 export type Grade = 'U' | 'G' | 'VG'
@@ -156,7 +156,7 @@ export function forecastScore(
   examDate: number,
   examInfo: NonNullable<Course['examInfo']>,
 ): Forecast {
-  const pool = questions.filter(countsForForecast)
+  const pool = questions.filter((q) => countsForForecast(q, states.get(q.id)))
   const weights = topicWeights(questions.filter(isPractisable))
   const byTopic = new Map<string, number[]>()
   for (const q of pool) byTopic.set(q.topic, [...(byTopic.get(q.topic) ?? []), rExam(states.get(q.id), examDate)])

@@ -1,5 +1,8 @@
 import { useState } from 'react'
 import { hasTrustedAnswer, type Answer, type Question } from '../content/schema'
+import { setCardVerdict } from '../data/approval'
+import type { ReviewState } from '../db/db'
+import { isGenerated } from '../lib/trust'
 import { IconAlert, IconSeal } from '../ui/icons'
 import { RichText } from './RichText'
 
@@ -56,18 +59,91 @@ function OwnNotes({ a }: { a: Answer }) {
   )
 }
 
+function GeneratedAnswer({
+  question,
+  answers,
+  courseId,
+  state,
+}: {
+  question: Question
+  answers: Answer[]
+  courseId: string
+  state?: ReviewState
+}) {
+  const [verdict, setVerdict] = useState<'approved' | 'rejected' | undefined>(
+    state?.approved ? 'approved' : undefined,
+  )
+  const pages = [...new Set(question.evidence?.flatMap((e) => e.pages) ?? answers.flatMap((a) => a.pages ?? []))]
+  const decide = async (v: 'approved' | 'rejected') => {
+    await setCardVerdict(courseId, question.id, v)
+    setVerdict(v)
+  }
+
+  return (
+    <article className="answer answer-generated">
+      <header>
+        <span className="badge badge-soft">Från föreläsningen · AI-sammanställt</span>
+        {pages.length > 0 && (
+          <span className="muted small">
+            {pages.length === 1 ? 'Bild' : 'Bilder'} {pages.join(', ')}
+          </span>
+        )}
+      </header>
+      {answers.map((a, i) => (
+        <RichText key={i} text={a.text} />
+      ))}
+      {verdict === 'approved' ? (
+        <p className="small">
+          <strong>Godkänt.</strong> Kortet räknas nu in i behärskat och prognosen.
+        </p>
+      ) : verdict === 'rejected' ? (
+        <p className="small">
+          <strong>Rapporterat som fel.</strong> Kortet visas inte igen.
+        </p>
+      ) : (
+        <>
+          <p className="small muted">
+            Stämmer svaret med föreläsningen? Godkänn kortet så räknas det in, eller rapportera fel så försvinner det.
+          </p>
+          <div className="row-gap">
+            <button type="button" className="btn btn-dark" onClick={() => decide('approved')}>
+              Godkänn kortet
+            </button>
+            <button type="button" className="btn btn-outline" onClick={() => decide('rejected')}>
+              Rapportera fel
+            </button>
+          </div>
+        </>
+      )}
+    </article>
+  )
+}
+
 const fmt = (n: number) => n.toLocaleString('sv-SE')
 
-export function AnswerPanel({ question }: { question: Question }) {
+export function AnswerPanel({
+  question,
+  courseId,
+  state,
+}: {
+  question: Question
+  courseId?: string
+  state?: ReviewState
+}) {
   const answers = sortAnswers(question.answers)
   const official = answers.filter((a) => a.provenance === 'official')
   const students = answers.filter((a) => a.provenance === 'student')
   const notes = answers.filter((a) => a.provenance === 'own_notes')
+  const generated = answers.filter((a) => a.provenance === 'generated')
   const trusted = hasTrustedAnswer(question)
 
   return (
     <div className="answer-panel">
-      {!trusted && (
+      {isGenerated(question) && courseId && (
+        <GeneratedAnswer question={question} answers={generated} courseId={courseId} state={state} />
+      )}
+
+      {!trusted && !isGenerated(question) && (
         <div className="notice">
           <IconAlert />
           <div>
