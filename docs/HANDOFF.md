@@ -51,7 +51,9 @@ Done and tested (31 tests):
 8. [x] **Täckningskarta** (mockup 7): per topic, the share mastered / seen / not started, and how many exams the topic appears on.
    - Done: `/kurs/:courseId/tackning` (`src/pages/Coverage.tsx`), logic in `src/lib/coverage.ts` (tested). "Plugga luckorna" opens practice with `?luckor=1` (`gapQueue`).
    - Decisions: "behärskad" = stability ≥ 21 days AND a trustworthy key (objective type or `hasTrustedAnswer`), per the plan; `topicStats` (Library/Course %) now uses the same `isMastered`. Topics come from questions and objectives, so an objective topic with no questions shows as an orange "Inga frågor än" gap. Rows are sorted by how many exams the topic appears on. The per-topic "osäkert facit" count excludes questions with own notes, since the plan gives those a milder label (note: `AnswerPanel` still shows its orange notice for notes-only questions, as written before this session). The gap queue ranks topics by `(exams + 1) × unmastered share`, unseen and least stable first, interleaved.
-9. [ ] **Felbank**: questions with lapses ≥ 2 or most recently rated "Igen".
+9. [x] **Felbank**: questions with lapses ≥ 2 or most recently rated "Igen".
+   - Done: `/kurs/:courseId/felbank` (`src/pages/Mistakes.tsx`), logic in `src/lib/mistakes.ts` (tested). "Öva felbanken" and each row open practice with `?fragor=`. The Course tiles now show live counts for Felbank and Täckningskarta (topics with a gap or unstarted questions).
+   - Decision: "lapses" are FSRS `card.lapses` (forgetting after the card had graduated); the row also shows how often she rated it "Igen" in total, from `reviewLog`.
 10. [ ] **PWA**: `vite-plugin-pwa` (autoUpdate + "Ny version – ladda om" banner), manifest (the mascot icon, Swedish name), offline caching including Google Fonts, `base` set for GitHub Pages.
 11. [ ] **Deploy**: a GitHub Actions workflow that builds and deploys to Pages on push to main (runs `npm test` first).
 12. [ ] **Dexie migration test harness**, ready for the first v2 schema change.

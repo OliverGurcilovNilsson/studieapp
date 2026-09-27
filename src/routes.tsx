@@ -3,6 +3,7 @@ import { Course } from './pages/Course'
 import { Coverage } from './pages/Coverage'
 import { ExamSim } from './pages/ExamSim'
 import { Library } from './pages/Library'
+import { Mistakes } from './pages/Mistakes'
 import { Practice, PracticeIndex } from './pages/Practice'
 import { Settings } from './pages/Settings'
 import { Shell } from './ui/Shell'
@@ -16,6 +17,7 @@ export function AppRoutes() {
           <Route index element={<Library />} />
           <Route path="kurs/:courseId" element={<Course />} />
           <Route path="kurs/:courseId/tackning" element={<Coverage />} />
+          <Route path="kurs/:courseId/felbank" element={<Mistakes />} />
           <Route path="ova" element={<PracticeIndex />} />
           <Route path="installningar" element={<Settings />} />
           <Route path="*" element={<Navigate to="/" replace />} />

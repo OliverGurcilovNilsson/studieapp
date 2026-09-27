@@ -1,6 +1,9 @@
 import { Link, useParams } from 'react-router-dom'
 import { loadCourseData, loadPlanContext, predictedRecall, topicStats } from '../data/queries'
+import { db } from '../db/db'
+import { coverage } from '../lib/coverage'
 import { dailyQueue, daysUntil, forecastScore, isExamModeActive } from '../lib/examMode'
+import { mistakeBank } from '../lib/mistakes'
 import { buildQueue } from '../lib/session'
 import { topicColor, topicName } from '../lib/topics'
 import { IconBack, IconBolt, Mascot, TileIconExam, TileIconMap, TileIconMistakes, TileIconPractice } from '../ui/icons'
@@ -26,12 +29,18 @@ export function Course() {
     const forecast = examMode ? predictedRecall(cd, examDate) : undefined
     const points = examMode && cd.course.examInfo ? forecastScore(cd.questions, cd.states, examDate, cd.course.examInfo) : undefined
     const daysLeft = examMode ? daysUntil(examDate, now) : undefined
-    return { cd, stats, total, mastered, dueToday, exams, examDate, forecast, points, daysLeft }
+    const [log, objectives] = await Promise.all([
+      db.reviewLog.where({ courseId }).toArray(),
+      db.objectives.where({ courseId }).toArray(),
+    ])
+    const mistakes = mistakeBank(cd.questions, cd.states, log).length
+    const gaps = coverage(cd.questions, cd.states, objectives).topics.filter((t) => t.total === 0 || t.notStarted > 0).length
+    return { cd, stats, total, mastered, dueToday, exams, examDate, forecast, points, daysLeft, mistakes, gaps }
   }, [courseId])
 
   if (loading) return null
   if (!data) return <p>Kursen finns inte. <Link to="/">Till biblioteket</Link></p>
-  const { cd, stats, total, mastered, dueToday, exams, examDate, forecast, points, daysLeft } = data
+  const { cd, stats, total, mastered, dueToday, exams, examDate, forecast, points, daysLeft, mistakes, gaps } = data
   const pct = total ? Math.round((mastered / total) * 100) : 0
 
   return (
@@ -107,14 +116,18 @@ export function Course() {
             <TileIconMistakes />
             <div>
               <strong>Felbank</strong>
-              <span className="muted small">Frågor du missar</span>
+              <span className="muted small">
+                {mistakes ? `${mistakes} ${mistakes === 1 ? 'fråga' : 'frågor'}` : 'Tom just nu'}
+              </span>
             </div>
           </Link>
           <Link to={`/kurs/${courseId}/tackning`} className="tile">
             <TileIconMap />
             <div>
               <strong>Täckningskarta</strong>
-              <span className="muted small">Hitta luckorna</span>
+              <span className="muted small">
+                {gaps ? `${gaps} ${gaps === 1 ? 'lucka' : 'luckor'} hittade` : 'Inga luckor'}
+              </span>
             </div>
           </Link>
         </div>
