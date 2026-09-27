@@ -8,8 +8,6 @@ import { buildQueue, interleave, isPractisable, type QueueItem } from './session
 import { newCard, retrievability, review } from './scheduler'
 
 const DAY = 86_400_000
-/** No new questions in the last days before the exam: only consolidation. */
-export const NO_NEW_DAYS = 3
 
 /** Rough time per question, used until there is enough of her own timing data. */
 export const DEFAULT_SECONDS: Record<QuestionType, number> = {
@@ -57,11 +55,10 @@ export function examGain(state: ReviewState | undefined, now: number, examDate: 
   return Math.max(0, retrievability(after, examDate) - rExam(state, examDate))
 }
 
-/** New questions to start today: spread what is left over the days before the no-new window. */
+/** New questions to start today: spread what is left evenly over the days until the exam. */
 export function newPerDay(notStarted: number, examDate: number, now: number): number {
-  const days = daysUntil(examDate, now) - NO_NEW_DAYS
-  if (days <= 0 || notStarted <= 0) return 0
-  return Math.ceil(notStarted / days)
+  if (notStarted <= 0) return 0
+  return Math.ceil(notStarted / Math.max(1, daysUntil(examDate, now)))
 }
 
 export interface DayPlanInput {
@@ -111,8 +108,9 @@ export function planDay({
   const scoped = pool.filter((q) => !topic || q.topic === topic)
   const due = scoped.filter((q) => states.has(q.id) && states.get(q.id)!.due <= now).map(valued)
 
+  // The daily quota paces the mixed session; a topic she picks herself is never "done for today".
   const notStarted = pool.filter((q) => !states.has(q.id)).length
-  const quota = Math.max(0, newPerDay(notStarted + startedToday, examDate, now) - startedToday)
+  const quota = topic ? Infinity : Math.max(0, newPerDay(notStarted + startedToday, examDate, now) - startedToday)
   const fresh = scoped
     .filter((q) => !states.has(q.id))
     .map(valued)

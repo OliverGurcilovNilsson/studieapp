@@ -89,7 +89,7 @@ The architecture from the earlier plan stays: a React + Vite + TS PWA on GitHub 
   - Topic weight = the objective's share of points across past exams.
   - Daily queue: rank cards by `weight × (R_exam_after − R_exam_now) / estimated seconds per card` and fill her time budget.
   - No interval can go past the exam date. Every weighted card gets a final review in the last 1–3 days.
-  - New cards are paced as (cards not yet started) ÷ (days left − 3); nothing new is introduced in the last 3 days.
+  - New cards are paced as (cards not yet started) ÷ (days left). The quota applies only to the mixed daily session; a topic she picks herself is never capped, and "Öva ändå" falls back to new questions.
   - The overview shows "Beräknad kunskap på tentadagen", the weighted mean of R_exam across all cards.
   - After the exam, the app goes back to normal FSRS.
 

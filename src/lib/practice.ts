@@ -58,19 +58,18 @@ export function summarize(results: SessionResult[]) {
 }
 
 /**
- * "Öva ändå": when nothing is due, practise the reviewed questions that come due soonest.
- * Never includes new questions (buildQueue paces those).
+ * "Öva ändå": when nothing is left for today, practise the reviewed questions that come due
+ * soonest, then fill up with new ones, so there is always something to practise.
  */
 export function buildAheadQueue(
   questions: Question[],
   states: Map<string, ReviewState>,
   { topic, examId, limit = 20 }: { topic?: string; examId?: string; limit?: number } = {},
 ): QueueItem[] {
-  return questions
-    .filter((q) => isPractisable(q) && states.has(q.id) && (!topic || q.topic === topic) && (!examId || q.examId === examId))
-    .sort((a, b) => states.get(a.id)!.due - states.get(b.id)!.due)
-    .slice(0, limit)
-    .map((q) => ({ question: q, state: states.get(q.id) }))
+  const pool = questions.filter((q) => isPractisable(q) && (!topic || q.topic === topic) && (!examId || q.examId === examId))
+  const seen = pool.filter((q) => states.has(q.id)).sort((a, b) => states.get(a.id)!.due - states.get(b.id)!.due)
+  const fresh = pool.filter((q) => !states.has(q.id))
+  return [...seen, ...fresh].slice(0, limit).map((q) => ({ question: q, state: states.get(q.id) }))
 }
 
 /** "Bias & confounding · Fritext · 4 p" */

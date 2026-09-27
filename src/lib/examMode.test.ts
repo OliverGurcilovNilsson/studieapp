@@ -73,10 +73,11 @@ describe('recall on exam day', () => {
 })
 
 describe('newPerDay', () => {
-  it('spreads new questions over the days before the last three', () => {
-    expect(newPerDay(30, now + 13 * DAY, now)).toBe(3)
-    expect(newPerDay(31, now + 13 * DAY, now)).toBe(4)
-    expect(newPerDay(30, now + 3 * DAY, now)).toBe(0)
+  it('spreads new questions evenly over the days until the exam', () => {
+    expect(newPerDay(30, now + 10 * DAY, now)).toBe(3)
+    expect(newPerDay(31, now + 10 * DAY, now)).toBe(4)
+    expect(newPerDay(30, now + 3 * DAY, now)).toBe(10)
+    expect(newPerDay(30, now, now)).toBe(30)
     expect(newPerDay(0, now + 30 * DAY, now)).toBe(0)
   })
 })
@@ -89,13 +90,13 @@ describe('planDay', () => {
       ...Array.from({ length: 4 }, (_, i) => q(`big${i}`, 'big', { examId: 'e', points: 10, type: 'mcq', options: [{ id: 'a', text: 'x' }], correct: ['a'] })),
       ...Array.from({ length: 4 }, (_, i) => q(`small${i}`, 'small', { examId: 'e', points: 1, type: 'mcq', options: [{ id: 'a', text: 'x' }], correct: ['a'] })),
     ]
-    // 2 minutes = 4 MCQs of 30 s; 8 new, 7 days to pace them → 2 per day.
-    const plan = planDay({ questions, states: new Map(), now, examDate: exam, minutesPerDay: 2 })
+    // 2 minutes = 4 MCQs of 30 s; 8 new, 4 days to pace them → 2 per day.
+    const plan = planDay({ questions, states: new Map(), now, examDate: now + 4 * DAY, minutesPerDay: 2 })
     expect(plan).toHaveLength(2)
     expect(plan.every((i) => i.question.topic === 'big')).toBe(true)
   })
 
-  it('always includes due questions over new ones when time is short, and none new near the exam', () => {
+  it('keeps introducing new questions right up to the exam', () => {
     const questions = [q('seen', 't', { examId: 'e', points: 2 }), q('new', 't', { examId: 'e', points: 2 })]
     const state = { ...learned('seen', now - DAY, 1), due: now - DAY }
     const plan = planDay({
@@ -103,18 +104,25 @@ describe('planDay', () => {
       states: new Map([['seen', state]]),
       now,
       examDate: now + 2 * DAY,
-      minutesPerDay: 1,
+      minutesPerDay: 60,
     })
-    expect(plan.map((i) => i.question.id)).toEqual(['seen'])
+    expect(plan.map((i) => i.question.id).sort()).toEqual(['new', 'seen'])
   })
 
   it('counts new questions already started today against the quota', () => {
     const questions = Array.from({ length: 7 }, (_, i) => q(`n${i}`, 't', { examId: 'e' }))
-    // 7 questions over 7 days of pacing → 1 per day, and n0 was already started today.
+    // 7 questions over 10 days of pacing → 1 per day, and n0 was already started today.
     const states = new Map([['n0', { courseId: 'c', questionId: 'n0', due: now + DAY, card: review(newCard(now), Rating.Good, now) }]])
     const plan = planDay({ questions, states, now, examDate: exam, minutesPerDay: 60, startedToday: 1 })
     expect(plan).toHaveLength(0)
     expect(planDay({ questions, states, now, examDate: exam, minutesPerDay: 60, startedToday: 0 })).toHaveLength(1)
+  })
+
+  it('ignores the daily quota for a topic she picks herself', () => {
+    const questions = Array.from({ length: 7 }, (_, i) => q(`n${i}`, 't', { examId: 'e' }))
+    const states = new Map([['n0', { courseId: 'c', questionId: 'n0', due: now + DAY, card: review(newCard(now), Rating.Good, now) }]])
+    const plan = planDay({ questions, states, now, examDate: exam, minutesPerDay: 60, startedToday: 1, topic: 't' })
+    expect(plan.length).toBeGreaterThan(0)
   })
 
   it('filters by topic', () => {

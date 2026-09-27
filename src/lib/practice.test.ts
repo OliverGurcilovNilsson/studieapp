@@ -72,13 +72,14 @@ describe('summarize', () => {
 })
 
 describe('buildAheadQueue', () => {
-  it('takes reviewed questions by due date and never new ones', () => {
+  it('takes reviewed questions by due date, then new ones', () => {
     const states = new Map([
       ['q2', state('q2', 300)],
       ['q1', state('q1', 200)],
     ])
     const queue = buildAheadQueue([q('q1'), q('q2'), q('q3')], states)
-    expect(queue.map((i) => i.question.id)).toEqual(['q1', 'q2'])
+    expect(queue.map((i) => i.question.id)).toEqual(['q1', 'q2', 'q3'])
+    expect(buildAheadQueue([q('q1'), q('q2'), q('q3')], states, { limit: 2 }).map((i) => i.question.id)).toEqual(['q1', 'q2'])
   })
 })
 
