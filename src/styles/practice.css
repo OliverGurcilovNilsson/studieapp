@@ -990,3 +990,8 @@ details > summary::-webkit-details-marker {
   padding: 6px 0;
   border-bottom: 1px solid var(--line);
 }
+
+.ahead-note {
+  text-align: center;
+  margin: 8px 0 0;
+}

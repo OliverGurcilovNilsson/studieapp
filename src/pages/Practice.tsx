@@ -90,15 +90,19 @@ function Session({
 }) {
   const courseId = data.cd.course.id
   const [states, setStates] = useState(data.cd.states)
-  const [queue, setQueue] = useState<QueueItem[]>(() =>
-    ids
+  const [initial] = useState(() => {
+    const planned = ids
       ? pickQuestions(data.cd.questions, data.cd.states, ids)
       : gaps
         ? gapQueue(data.cd.questions, data.cd.states)
       : examId
       ? buildQueue(data.cd.questions, data.cd.states, Date.now(), { examId, limit: 999, newLimit: 999 })
-      : dailyQueue({ questions: data.cd.questions, states: data.cd.states, now: Date.now(), topic, ...data.ctx }),
-  )
+      : dailyQueue({ questions: data.cd.questions, states: data.cd.states, now: Date.now(), topic, ...data.ctx })
+    // Today's plan is done: opening "Öva" still means she wants to study, so carry on ahead of schedule.
+    if (planned.length || ids || gaps) return { planned, ahead: false }
+    return { planned: buildAheadQueue(data.cd.questions, data.cd.states, { topic, examId }), ahead: true }
+  })
+  const [queue, setQueue] = useState<QueueItem[]>(initial.planned)
   const [pos, setPos] = useState(0)
   const [round, setRound] = useState(0)
   const [results, setResults] = useState<SessionResult[]>([])
@@ -181,6 +185,9 @@ function Session({
         onSkip={pos < queue.length - 1 ? skip : undefined}
       />
       {error && <p className="error">{error}</p>}
+      {initial.ahead && pos === 0 && (
+        <p className="muted small ahead-note">Dagens plan är klar – du övar i förväg.</p>
+      )}
       <QuestionRunner
         key={`${round}:${pos}:${q.id}`}
         courseId={courseId}
