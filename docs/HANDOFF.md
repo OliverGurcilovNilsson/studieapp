@@ -23,7 +23,8 @@ Done and tested (31 tests):
 `src/main.tsx` / `App.tsx` are still the Vite template. **The app does not show the new pages yet.**
 
 ## Task list (in order; tick them off in this file as you go)
-1. [ ] **Sample course** `dev/sample-course.json`: made-up content in the bundle format covering every question type (mcq, mcq_multi with negativeMarking, calculation with decimals, free_text with official, student (full and partial) and own_notes answers, one with no trusted answer, flashcard, article_review), 2 fake exams, 1 fake PNG asset. Add a "Ladda exempelkurs" button in dev builds only.
+1. [x] **Sample course** `dev/sample-course.json`: made-up content in the bundle format covering every question type (mcq, mcq_multi with negativeMarking, calculation with decimals, free_text with official, student (full and partial) and own_notes answers, one with no trusted answer, flashcard, article_review), 2 fake exams, 1 fake PNG asset. Add a "Ladda exempelkurs" button in dev builds only.
+   - Done: `dev/sample-course.json` (course id `exempel`, 18 made-up questions, exams `2025-01-17` and `2025-06-05`, a generated PNG chart and a tiny fake article PDF). Regenerate with `node dev/make-sample.mjs dev/sample-course.json`. `src/dev/sampleCourse.test.ts` checks type coverage and that every reference resolves. The button (`src/dev/SampleButton.tsx`) is rendered only behind `import.meta.env.DEV`.
 2. [ ] **Routing** (HashRouter, for GitHub Pages): `/` Library, `/kurs/:courseId` Course, `/ova/:courseId?amne=&tenta=` Practice, `/installningar` Settings. Replace the Vite template (delete App.tsx/App.css/assets). Add the Google Fonts link (Bricolage Grotesque 500/700/800, Figtree 400–700) to index.html, and set `lang="sv"` and the title "Pluggappen".
 3. [ ] **Practice page** (`src/pages/Practice.tsx` + `src/practice/*`), matching mockups 3–6:
    - Header: close, "n / N", progress bar, topic · type · points label.

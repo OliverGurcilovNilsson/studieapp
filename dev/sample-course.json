@@ -1,0 +1,793 @@
+{
+  "format": "studieapp-course",
+  "version": 1,
+  "course": {
+    "id": "exempel",
+    "code": "EX0001",
+    "name": "Exempelkurs i epidemiologi",
+    "lang": "sv",
+    "examInfo": {
+      "maxPoints": 50,
+      "passPoints": 30,
+      "distinctionPoints": 40,
+      "rules": [
+        "Påhittad regel: felaktig avrundning ger avdrag.",
+        "Påhittad regel: felaktiga påståenden kan ge avdrag."
+      ]
+    }
+  },
+  "sources": [
+    {
+      "id": "src-exam-a",
+      "file": "exempeltenta-a.pdf",
+      "kind": "official_exam",
+      "examId": "2025-01-17"
+    },
+    {
+      "id": "src-guide-a",
+      "file": "exempel-bedomning-a.pdf",
+      "kind": "grading_guide",
+      "examId": "2025-01-17"
+    },
+    {
+      "id": "src-student-a",
+      "file": "exempel-studentkopia-a.pdf",
+      "kind": "student_copy",
+      "examId": "2025-01-17"
+    },
+    {
+      "id": "src-exam-b",
+      "file": "exempeltenta-b.pdf",
+      "kind": "official_exam",
+      "examId": "2025-06-05"
+    },
+    {
+      "id": "src-student-b",
+      "file": "exempel-studentkopia-b.pdf",
+      "kind": "student_copy",
+      "examId": "2025-06-05"
+    },
+    {
+      "id": "src-quiz",
+      "file": "exempel-quiz.pdf",
+      "kind": "course_quiz"
+    },
+    {
+      "id": "src-notes",
+      "file": "exempel-anteckningar.pdf",
+      "kind": "own_notes"
+    },
+    {
+      "id": "src-template",
+      "file": "exempel-granskningsmall.pdf",
+      "kind": "seminar_questions"
+    },
+    {
+      "id": "src-article",
+      "file": "exempel-artikel.pdf",
+      "kind": "article"
+    },
+    {
+      "id": "src-lec-1",
+      "file": "exempel-forelasning-1.pdf",
+      "kind": "lecture"
+    },
+    {
+      "id": "src-lec-2",
+      "file": "exempel-forelasning-2.pdf",
+      "kind": "lecture"
+    }
+  ],
+  "lectures": [
+    {
+      "id": "lec-1",
+      "title": "Grunder i epidemiologi (exempel)",
+      "sourceId": "src-lec-1",
+      "topic": "intro-studiedesigner"
+    },
+    {
+      "id": "lec-2",
+      "title": "Hälsoekonomi light (exempel)",
+      "sourceId": "src-lec-2",
+      "topic": "halsoekonomi-intro"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "obj-design",
+      "lectureId": "lec-1",
+      "topic": "intro-studiedesigner",
+      "text": "Känna igen vanliga studiedesigner."
+    },
+    {
+      "id": "obj-matt",
+      "lectureId": "lec-1",
+      "topic": "forekomstmatt",
+      "text": "Räkna ut incidens och prevalens."
+    },
+    {
+      "id": "obj-effekt",
+      "lectureId": "lec-1",
+      "topic": "effektmatt",
+      "text": "Räkna ut och tolka RR, OR och NNT/NNH."
+    },
+    {
+      "id": "obj-bias",
+      "lectureId": "lec-1",
+      "topic": "bias-confounding",
+      "text": "Förklara confounding och selektionsbias."
+    },
+    {
+      "id": "obj-valid",
+      "lectureId": "lec-1",
+      "topic": "validitetsmatt",
+      "text": "Förklara sensitivitet och specificitet."
+    },
+    {
+      "id": "obj-ddd",
+      "lectureId": "lec-1",
+      "topic": "lakemedelsanvandning-ddd",
+      "text": "Räkna DDD per 1000 invånare och dag."
+    },
+    {
+      "id": "obj-ekonomi",
+      "lectureId": "lec-2",
+      "topic": "halsoekonomi-intro",
+      "text": "Räkna och tolka ICER."
+    },
+    {
+      "id": "obj-etik",
+      "lectureId": "lec-2",
+      "topic": "forskningsetik",
+      "text": "Beskriva etikprövningens grunder (inga frågor än)."
+    }
+  ],
+  "exams": [
+    {
+      "id": "2025-01-17",
+      "date": "2025-01-17",
+      "kind": "ordinarie",
+      "sourceIds": [
+        "src-exam-a",
+        "src-guide-a",
+        "src-student-a"
+      ]
+    },
+    {
+      "id": "2025-06-05",
+      "date": "2025-06-05",
+      "kind": "omtenta",
+      "sourceIds": [
+        "src-exam-b",
+        "src-student-b"
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "origin": "exam",
+      "status": "approved",
+      "objectiveIds": [
+        "obj-design"
+      ],
+      "answers": [
+        {
+          "provenance": "official",
+          "text": "B. Grupperna väljs utifrån exponering och följs framåt i tid.",
+          "sourceId": "src-guide-a"
+        }
+      ],
+      "id": "2025-01-17-q1",
+      "examId": "2025-01-17",
+      "number": "1",
+      "part": "concepts",
+      "topic": "intro-studiedesigner",
+      "type": "mcq",
+      "points": 1,
+      "prompt": "En forskargrupp följer 3 000 personer som använder ett påhittat läkemedel och 3 000 som inte gör det i fem år och räknar nya fall av sömnproblem. Vilken design är det?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Fall-kontrollstudie"
+        },
+        {
+          "id": "b",
+          "text": "Kohortstudie"
+        },
+        {
+          "id": "c",
+          "text": "Tvärsnittsstudie"
+        },
+        {
+          "id": "d",
+          "text": "Ekologisk studie"
+        }
+      ],
+      "correct": [
+        "b"
+      ]
+    },
+    {
+      "origin": "exam",
+      "status": "approved",
+      "objectiveIds": [
+        "obj-valid"
+      ],
+      "answers": [
+        {
+          "provenance": "official",
+          "text": "A och C. B beskriver PPV, och hög sensitivitet ger få falskt negativa.",
+          "sourceId": "src-guide-a"
+        }
+      ],
+      "id": "2025-01-17-q2",
+      "examId": "2025-01-17",
+      "number": "2",
+      "part": "concepts",
+      "topic": "validitetsmatt",
+      "type": "mcq_multi",
+      "points": 2,
+      "negativeMarking": true,
+      "prompt": "Vilka påståenden om ett påhittat diagnostiskt test stämmer? Välj alla som stämmer. Fel val ger avdrag.",
+      "options": [
+        {
+          "id": "a",
+          "text": "Sensitivitet är andelen sjuka som testar positivt."
+        },
+        {
+          "id": "b",
+          "text": "Specificitet är andelen positiva test som är sjuka."
+        },
+        {
+          "id": "c",
+          "text": "Det positiva prediktiva värdet beror på hur vanlig sjukdomen är."
+        },
+        {
+          "id": "d",
+          "text": "Ett test med hög sensitivitet ger många falskt negativa."
+        }
+      ],
+      "correct": [
+        "a",
+        "c"
+      ]
+    },
+    {
+      "origin": "exam",
+      "status": "approved",
+      "objectiveIds": [
+        "obj-ddd"
+      ],
+      "answers": [
+        {
+          "provenance": "official",
+          "text": "68,5 DDD/1000 invånare och dag.",
+          "sourceId": "src-guide-a"
+        }
+      ],
+      "id": "2025-01-17-q3a",
+      "examId": "2025-01-17",
+      "number": "3a",
+      "part": "concepts",
+      "topic": "lakemedelsanvandning-ddd",
+      "type": "calculation",
+      "points": 2,
+      "context": "I den påhittade kommunen Exempelby bor 40 000 personer. Under ett år såldes 1 000 000 DDD av ett sömnmedel.",
+      "prompt": "Beräkna antal DDD per 1000 invånare och dag. Svara med en decimal.",
+      "numeric": {
+        "value": 68.4932,
+        "unit": "DDD/1000 inv/dag",
+        "decimals": 1,
+        "solution": [
+          "Invånardagar: 40 000 × 365 = 14 600 000",
+          "DDD per invånardag: 1 000 000 ÷ 14 600 000 = 0,068493",
+          "Per 1000 invånare: 0,068493 × 1000 = 68,5 DDD/1000 inv/dag"
+        ]
+      }
+    },
+    {
+      "origin": "exam",
+      "status": "approved",
+      "objectiveIds": [
+        "obj-effekt"
+      ],
+      "answers": [
+        {
+          "provenance": "official",
+          "text": "NNH = 50: för varje 50 som exponeras får en extra person biverkningen.",
+          "sourceId": "src-guide-a"
+        }
+      ],
+      "id": "2025-01-17-q3b",
+      "examId": "2025-01-17",
+      "number": "3b",
+      "part": "concepts",
+      "topic": "effektmatt",
+      "type": "calculation",
+      "points": 2,
+      "assetIds": [
+        "fig-1"
+      ],
+      "context": "En påhittad kohort följdes i ett år. Figuren visar andelen som fick biverkningen.\n\n| Grupp | Antal | Fall |\n|---|---|---|\n| Exponerade | 1 000 | 30 |\n| Oexponerade | 1 000 | 10 |",
+      "prompt": "Beräkna NNH (number needed to harm).",
+      "numeric": {
+        "value": 50,
+        "tolerance": 0.5,
+        "solution": [
+          "Risk exponerade: 30 ÷ 1 000 = 0,03",
+          "Risk oexponerade: 10 ÷ 1 000 = 0,01",
+          "Riskdifferens: 0,03 − 0,01 = 0,02",
+          "NNH = 1 ÷ 0,02 = 50"
+        ]
+      }
+    },
+    {
+      "origin": "exam",
+      "status": "approved",
+      "objectiveIds": [
+        "obj-bias"
+      ],
+      "answers": [
+        {
+          "provenance": "official",
+          "text": "En confounder är kopplad till exponeringen, påverkar risken för utfallet på egen hand och ligger inte i orsakskedjan. Exempel: patienter som får ett nytt medel är sjukare från början, så medlet ser farligt ut fast det är grundsjukdomen som ger utfallet.",
+          "sourceId": "src-guide-a"
+        },
+        {
+          "provenance": "student",
+          "text": "En tredje faktor som är kopplad till både exponering och utfall men inte är ett mellanled, t.ex. att de som får medlet redan är sjukare (confounding by indication).",
+          "awarded": 4,
+          "max": 4,
+          "sourceId": "src-student-a"
+        },
+        {
+          "provenance": "student",
+          "text": "När något annat påverkar resultatet, t.ex. ålder.",
+          "awarded": 2,
+          "max": 4,
+          "sourceId": "src-student-a",
+          "graderComment": "Kriterierna saknas och exemplet gäller inte ett läkemedel."
+        }
+      ],
+      "id": "2025-01-17-q4",
+      "examId": "2025-01-17",
+      "number": "4",
+      "part": "concepts",
+      "topic": "bias-confounding",
+      "type": "free_text",
+      "points": 4,
+      "prompt": "Vad menas med confounding? Ge ett påhittat exempel där ett läkemedel ser farligare ut än det är.",
+      "keyPoints": [
+        "Faktorn hänger ihop med exponeringen",
+        "Faktorn påverkar utfallet oberoende av exponeringen",
+        "Faktorn är inte ett mellanled",
+        "Ett rimligt läkemedelsexempel"
+      ],
+      "commonMistakes": [
+        "Att blanda ihop confounding med selektionsbias"
+      ]
+    },
+    {
+      "origin": "exam",
+      "status": "approved",
+      "objectiveIds": [
+        "obj-ekonomi"
+      ],
+      "answers": [
+        {
+          "provenance": "student",
+          "text": "Effektanalysen mäter i naturliga enheter, nyttoanalysen i nyttoenheter.",
+          "awarded": 2,
+          "max": 3,
+          "sourceId": "src-student-a",
+          "graderComment": "Nämn QALY."
+        },
+        {
+          "provenance": "student",
+          "text": "Nyttoanalysen räknar med QALY, den andra bara kostnad per effekt.",
+          "sourceId": "src-student-a"
+        }
+      ],
+      "id": "2025-01-17-q5",
+      "examId": "2025-01-17",
+      "number": "5",
+      "part": "concepts",
+      "topic": "halsoekonomi-intro",
+      "type": "free_text",
+      "points": 3,
+      "prompt": "Beskriv kort skillnaden mellan en kostnadseffektanalys och en kostnadsnyttoanalys.",
+      "explanation": "Påhittad förklaring: nyttoanalysen väger in livskvalitet, oftast som QALY."
+    },
+    {
+      "origin": "exam",
+      "status": "approved",
+      "objectiveIds": [],
+      "answers": [
+        {
+          "provenance": "official",
+          "text": "Bortfallet är större bland de exponerade (18 % mot 6 %). Om de som föll bort skiljer sig i risk för huvudvärk kan det ge selektionsbias, åt båda hållen.",
+          "sourceId": "src-guide-a"
+        }
+      ],
+      "id": "2025-01-17-q6",
+      "examId": "2025-01-17",
+      "number": "6",
+      "part": "article",
+      "topic": "artikelgranskning",
+      "type": "article_review",
+      "points": 3,
+      "articleId": "art-1",
+      "templateItemId": "t1-3",
+      "prompt": "Hur kan bortfallet ha påverkat resultatet i artikeln?",
+      "keyPoints": [
+        "Bortfallet skiljer sig mellan grupperna",
+        "Kan ge selektionsbias",
+        "Riktningen på felet diskuteras"
+      ]
+    },
+    {
+      "origin": "exam",
+      "status": "approved",
+      "objectiveIds": [
+        "obj-matt"
+      ],
+      "answers": [
+        {
+          "provenance": "official",
+          "text": "C. Punktprevalens.",
+          "sourceId": "src-exam-b"
+        }
+      ],
+      "id": "2025-06-05-q1",
+      "examId": "2025-06-05",
+      "number": "1",
+      "part": "concepts",
+      "topic": "forekomstmatt",
+      "type": "mcq",
+      "points": 1,
+      "prompt": "Vilket mått beskriver andelen i en befolkning som har en sjukdom vid en viss tidpunkt?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Incidensproportion"
+        },
+        {
+          "id": "b",
+          "text": "Incidensrat"
+        },
+        {
+          "id": "c",
+          "text": "Punktprevalens"
+        },
+        {
+          "id": "d",
+          "text": "Mortalitet"
+        }
+      ],
+      "correct": [
+        "c"
+      ]
+    },
+    {
+      "origin": "exam",
+      "status": "approved",
+      "objectiveIds": [
+        "obj-effekt"
+      ],
+      "answers": [
+        {
+          "provenance": "official",
+          "text": "B. Oddskvot, eftersom risken inte kan skattas direkt.",
+          "sourceId": "src-exam-b"
+        }
+      ],
+      "id": "2025-06-05-q2",
+      "examId": "2025-06-05",
+      "number": "2",
+      "part": "concepts",
+      "topic": "effektmatt",
+      "type": "mcq",
+      "points": 1,
+      "prompt": "Vilket effektmått räknar man normalt ut i en fall-kontrollstudie?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Relativ risk"
+        },
+        {
+          "id": "b",
+          "text": "Oddskvot"
+        },
+        {
+          "id": "c",
+          "text": "Riskdifferens"
+        },
+        {
+          "id": "d",
+          "text": "Incidensrat"
+        }
+      ],
+      "correct": [
+        "b"
+      ]
+    },
+    {
+      "origin": "exam",
+      "status": "approved",
+      "objectiveIds": [
+        "obj-matt"
+      ],
+      "answers": [
+        {
+          "provenance": "official",
+          "text": "13,0 %",
+          "sourceId": "src-exam-b"
+        }
+      ],
+      "id": "2025-06-05-q3",
+      "examId": "2025-06-05",
+      "number": "3",
+      "part": "concepts",
+      "topic": "forekomstmatt",
+      "type": "calculation",
+      "points": 2,
+      "prompt": "I en påhittad enkät svarade 1 800 personer och 234 hade besvär just nu. Beräkna prevalensen i procent med en decimal.",
+      "numeric": {
+        "value": 13,
+        "unit": "%",
+        "decimals": 1,
+        "solution": [
+          "234 ÷ 1 800 = 0,13",
+          "0,13 × 100 = 13,0 %"
+        ]
+      }
+    },
+    {
+      "origin": "exam",
+      "status": "approved",
+      "objectiveIds": [
+        "obj-design"
+      ],
+      "answers": [
+        {
+          "provenance": "student",
+          "text": "Fördel: passar för ovanliga sjukdomar och går snabbt. Nackdel: exponeringen mäts i efterhand, vilket ger risk för recall bias.",
+          "awarded": 3,
+          "max": 3,
+          "sourceId": "src-student-b"
+        }
+      ],
+      "id": "2025-06-05-q4",
+      "examId": "2025-06-05",
+      "number": "4",
+      "part": "concepts",
+      "topic": "intro-studiedesigner",
+      "type": "free_text",
+      "points": 3,
+      "prompt": "Ge en fördel och en nackdel med en fall-kontrollstudie jämfört med en kohortstudie.",
+      "keyPoints": [
+        "Fördel: bra för ovanliga utfall",
+        "Fördel: snabb och billig",
+        "Nackdel: risk för recall bias"
+      ]
+    },
+    {
+      "origin": "exam",
+      "status": "approved",
+      "objectiveIds": [
+        "obj-ekonomi"
+      ],
+      "answers": [
+        {
+          "provenance": "official",
+          "text": "150 000 kr/QALY",
+          "sourceId": "src-exam-b"
+        }
+      ],
+      "id": "2025-06-05-q5",
+      "examId": "2025-06-05",
+      "number": "5",
+      "part": "concepts",
+      "topic": "halsoekonomi-intro",
+      "type": "calculation",
+      "points": 2,
+      "context": "Ett påhittat nytt läkemedel kostar 120 000 kr mer per patient än standardbehandlingen och ger 0,8 fler QALY.",
+      "prompt": "Beräkna ICER. Avrunda till heltal.",
+      "numeric": {
+        "value": 150000,
+        "unit": "kr/QALY",
+        "decimals": 0,
+        "solution": [
+          "ICER = Δkostnad ÷ Δeffekt",
+          "120 000 ÷ 0,8 = 150 000 kr per vunnen QALY"
+        ]
+      }
+    },
+    {
+      "origin": "exam",
+      "status": "approved",
+      "objectiveIds": [],
+      "answers": [
+        {
+          "provenance": "student",
+          "text": "Kohortstudie, eftersom deltagarna delas in efter exponering och följs framåt i ett år.",
+          "awarded": 2,
+          "max": 2,
+          "sourceId": "src-student-b"
+        }
+      ],
+      "id": "2025-06-05-q6",
+      "examId": "2025-06-05",
+      "number": "6",
+      "part": "article",
+      "topic": "artikelgranskning",
+      "type": "article_review",
+      "points": 2,
+      "articleId": "art-1",
+      "templateItemId": "t1-1",
+      "prompt": "Vilken studiedesign har artikeln? Motivera."
+    },
+    {
+      "origin": "workshop",
+      "status": "approved",
+      "objectiveIds": [
+        "obj-bias"
+      ],
+      "answers": [
+        {
+          "provenance": "own_notes",
+          "short": "Stratifiering eller multivariat regression, och matchning i designen.",
+          "text": "Man kan stratifiera på confoundern och räkna ett viktat mått (Mantel-Haenszel), eller justera i en regressionsmodell. Redan i designen kan man matcha eller begränsa urvalet. Okända confounders hanteras bäst genom randomisering.",
+          "sourceId": "src-notes"
+        }
+      ],
+      "id": "ws-1",
+      "topic": "bias-confounding",
+      "type": "free_text",
+      "prompt": "Workshop (påhittad): hur kan man hantera confounding i analysen?"
+    },
+    {
+      "origin": "workshop",
+      "status": "approved",
+      "objectiveIds": [
+        "obj-valid"
+      ],
+      "answers": [
+        {
+          "provenance": "own_notes",
+          "text": "När få är sjuka blir de falskt positiva många jämfört med de sant positiva, så en större andel av de positiva testen är fel.",
+          "sourceId": "src-notes"
+        }
+      ],
+      "id": "ws-2",
+      "topic": "validitetsmatt",
+      "type": "free_text",
+      "prompt": "Workshop (påhittad): varför sjunker PPV när sjukdomen är ovanlig?"
+    },
+    {
+      "origin": "quiz",
+      "status": "approved",
+      "objectiveIds": [
+        "obj-matt"
+      ],
+      "answers": [
+        {
+          "provenance": "official",
+          "text": "Antal nya fall under en period i en befolkning som från början var fri från sjukdomen.",
+          "sourceId": "src-quiz"
+        }
+      ],
+      "id": "fc-1",
+      "topic": "forekomstmatt",
+      "type": "flashcard",
+      "prompt": "Incidens"
+    },
+    {
+      "origin": "quiz",
+      "status": "approved",
+      "objectiveIds": [
+        "obj-ekonomi"
+      ],
+      "answers": [
+        {
+          "provenance": "official",
+          "text": "Kvalitetsjusterat levnadsår: ett år i full hälsa = 1 QALY.",
+          "sourceId": "src-quiz"
+        }
+      ],
+      "id": "fc-2",
+      "topic": "halsoekonomi-intro",
+      "type": "flashcard",
+      "prompt": "QALY"
+    },
+    {
+      "origin": "quiz",
+      "status": "approved",
+      "objectiveIds": [
+        "obj-ddd"
+      ],
+      "answers": [
+        {
+          "provenance": "official",
+          "text": "Defined Daily Dose: antagen genomsnittlig underhållsdos per dag för en vuxen.",
+          "sourceId": "src-quiz"
+        }
+      ],
+      "id": "quiz-1",
+      "topic": "lakemedelsanvandning-ddd",
+      "type": "mcq",
+      "prompt": "Vad står DDD för?",
+      "options": [
+        {
+          "id": "a",
+          "text": "Defined Daily Dose"
+        },
+        {
+          "id": "b",
+          "text": "Daily Drug Dispensing"
+        },
+        {
+          "id": "c",
+          "text": "Dose Duration Data"
+        }
+      ],
+      "correct": [
+        "a"
+      ]
+    }
+  ],
+  "reviewTemplates": [
+    {
+      "id": "rt-1",
+      "name": "Granskningsmall (exempel)",
+      "sourceId": "src-template",
+      "items": [
+        {
+          "id": "t1-1",
+          "number": 1,
+          "section": "Design",
+          "text": "Vilken studiedesign har artikeln?"
+        },
+        {
+          "id": "t1-2",
+          "number": 2,
+          "section": "Urval",
+          "text": "Hur valdes deltagarna ut?"
+        },
+        {
+          "id": "t1-3",
+          "number": 3,
+          "section": "Validitet",
+          "text": "Hur kan bortfallet ha påverkat resultatet?"
+        }
+      ]
+    }
+  ],
+  "articles": [
+    {
+      "id": "art-1",
+      "title": "Kaffe och huvudvärk – en påhittad kohortstudie",
+      "citation": "Exempelsson A, Påhittad B. Tidskrift för exempel. 2024;1:1–5.",
+      "design": "Kohortstudie",
+      "assetId": "article-1-pdf",
+      "templateId": "rt-1",
+      "sourceIds": [
+        "src-article"
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "id": "fig-1",
+      "mime": "image/png",
+      "data": "iVBORw0KGgoAAAANSUhEUgAAAPAAAACWCAIAAABvmpKCAAACbElEQVR4nO3SsW0UABBE0WvhJPrPCRw5oisHznEHOFk0x+d9TQGr1Xv8lkI91gdIlwGtVEArFdBKBbRSAa1UQCsV0EoFtFIBrVRAKxXQSgW0UgGtVEArFdBKBbRSAa1UQCsV0EoFtFIBrVRAKxXQSgW0UgGtVEArFdBKBbRSAa1UQCsV0EoFtFIBrVRAKxXQSgW0UgGtVEAr1YuC/vz1/oJbf0XfBzTQqYAGOhXQQKcCGuhUQAOdCmigUwENdCqggU4FNNCpgAY6FdBApwIa6FRAA50KaKBTAQ10KqCBTgU00KmABjoV0ECnAhroVEADnQpooFMBDXQqoIFOBTTQqYAGOhXQQKcCGuhUQAOdCmigUwENdCqggU4FNNCpgAY6FdBApwIa6FRAA50KaKBTAQ10KqCBTgU00KmABjoV0ECnAhroVEADnQpooFMBDXQqoIFOBTTQqYAGOhXQQKcCGuhUQAOdCmigUwENdCqggU4FNNCpgAY6FdBApwL6HwD98+3jBbf6xp8DGmig/35zu0ADfdncLtBAXza3CzTQl83tAg30ZXO7QAN92dwu0EBfNrcLNNCXze0CDfRlc7tAA33Z3C7QQF82tws00JfN7QIN9GVzu0ADfdncLtBAXza3CzTQl83tAg30ZXO7QAN92dwu0EBfNrcLNNCXze0CDfRlc7tAA33Z3C7QQF82tws00JfN7QIN9GVzu0ADfdncLtBAXza3CzTQl83tAv0/gn4+f5idD2hLDWhLDWhLbQZaerWAViqglQpopQJaqYBWKqCVCmilAlqpgFYqoJUKaKUCWqmAViqglQpopfoC9lOrbbFTpZMAAAAASUVORK5CYII=",
+      "caption": "Andel med biverkning per grupp (påhittade data)"
+    },
+    {
+      "id": "article-1-pdf",
+      "mime": "application/pdf",
+      "data": "JVBERi0xLjQKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4KZW5kb2JqCjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFszIDAgUl0gL0NvdW50IDEgPj4KZW5kb2JqCjMgMCBvYmoKPDwgL1R5cGUgL1BhZ2UgL1BhcmVudCAyIDAgUiAvTWVkaWFCb3ggWzAgMCA1OTUgODQyXSAvQ29udGVudHMgNCAwIFIgL1Jlc291cmNlcyA8PCAvRm9udCA8PCAvRjEgNSAwIFIgPj4gPj4gPj4KZW5kb2JqCjQgMCBvYmoKPDwgL0xlbmd0aCA2NjAgPj4Kc3RyZWFtCkJUIC9GMSAxOCBUZiA2MCA3NjAgVGQgKEthZmZlIG9jaCBodXZ1ZHZhcmsgLSBlbiBwYWhpdHRhZCBrb2hvcnRzdHVkaWUpIFRqIEVUCkJUIC9GMSAxMiBUZiA2MCA3MzQgVGQgKEV4ZW1wZWxzc29uIEEsIFBhaGl0dGFkIEIuIFRpZHNrcmlmdCBmb3IgZXhlbXBlbCAyMDI0OzE6MS01LikgVGogRVQKQlQgL0YxIDEyIFRmIDYwIDcwOCBUZCAoRGV0dGEgYXIgZW4gUEFISVRUQUQgYXJ0aWtlbCBmb3IgYXR0IHRlc3RhIGFwcGVuLikgVGogRVQKQlQgL0YxIDEyIFRmIDYwIDY4MiBUZCAoTWV0b2Q6IDIgMDAwIGtvbnRvcnNhcmJldGFyZSBmb2xqZGVzIGkgZXR0IGFyLikgVGogRVQKQlQgL0YxIDEyIFRmIDYwIDY1NiBUZCAoRXhwb25lcmluZzogbWVyIGFuIDQga29wcGFyIGthZmZlIHBlciBkYWcgKHNqYWx2cmFwcG9ydGVyYXQpLikgVGogRVQKQlQgL0YxIDEyIFRmIDYwIDYzMCBUZCAoVXRmYWxsOiBtaW5zdCBlbiBkYWcgbWVkIGh1dnVkdmFyayBwZXIgdmVja2EuKSBUaiBFVApCVCAvRjEgMTIgVGYgNjAgNjA0IFRkIChCb3J0ZmFsbDogMTggJSBpIGRlbiBleHBvbmVyYWRlIGdydXBwZW4sIDYgJSBpIGRlbiBvZXhwb25lcmFkZS4pIFRqIEVUCkJUIC9GMSAxMiBUZiA2MCA1NzggVGQgKFJlc3VsdGF0OiBSUiAxLDQgKDk1ICUgS0kgMSwxLTEsOCkuKSBUaiBFVAplbmRzdHJlYW0KZW5kb2JqCjUgMCBvYmoKPDwgL1R5cGUgL0ZvbnQgL1N1YnR5cGUgL1R5cGUxIC9CYXNlRm9udCAvSGVsdmV0aWNhIC9FbmNvZGluZyAvV2luQW5zaUVuY29kaW5nID4+CmVuZG9iagp4cmVmCjAgNgowMDAwMDAwMDAwIDY1NTM1IGYgCjAwMDAwMDAwMDkgMDAwMDAgbiAKMDAwMDAwMDA1OCAwMDAwMCBuIAowMDAwMDAwMTE1IDAwMDAwIG4gCjAwMDAwMDAyNDEgMDAwMDAgbiAKMDAwMDAwMDk1MiAwMDAwMCBuIAp0cmFpbGVyCjw8IC9TaXplIDYgL1Jvb3QgMSAwIFIgPj4Kc3RhcnR4cmVmCjEwNDkKJSVFT0YK",
+      "caption": "Påhittad artikel"
+    }
+  ]
+}

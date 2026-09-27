@@ -2,10 +2,11 @@ import { Link } from 'react-router-dom'
 import { loadCourseData, loadCourses, topicStats } from '../data/queries'
 import { topicColor } from '../lib/topics'
 import { IconPlus, Mascot } from '../ui/icons'
+import { SampleButton } from '../dev/SampleButton'
 import { useAsync } from '../ui/useAsync'
 
 export function Library() {
-  const { data, loading } = useAsync(async () => {
+  const { data, loading, reload } = useAsync(async () => {
     const courses = await loadCourses()
     const now = Date.now()
     return Promise.all(
@@ -32,6 +33,7 @@ export function Library() {
           <IconPlus width={18} height={18} />
           Importera kurs
         </Link>
+        {import.meta.env.DEV && <SampleButton onLoaded={reload} />}
       </section>
     )
   }
